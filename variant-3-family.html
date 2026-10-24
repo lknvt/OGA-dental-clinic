@@ -120,15 +120,16 @@ dialog::backdrop{background:#0b2a1a88;backdrop-filter:blur(3px)}
 .tmH{font-size:clamp(34px,4.6vw,56px);color:var(--deep);margin-bottom:12px;}
 .tmSub{max-width:34em;color:var(--muted);margin-bottom:28px}
 .tmF{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
-.tmF button{all:unset;cursor:pointer;padding:9px 18px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:500;font-size:15px;color:var(--ink);transition:.15s}
+.tmF button{all:unset;cursor:pointer;padding:9px 18px;border-radius:99px;box-shadow:inset 0 0 0 2px #b4cf86;font-weight:500;font-size:15px;color:var(--ink);transition:.15s}
 .tmF button:hover{box-shadow:inset 0 0 0 1.5px var(--green)}
 .tmF button[aria-pressed=true]{background:var(--green);color:#fff;box-shadow:none}
 .tmF button:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 .tmG{display:grid;grid-template-columns:repeat(auto-fill,minmax(188px,1fr));gap:18px}
-.tmC{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
-.tmC:hover{transform:translateY(-4px);box-shadow:0 22px 40px -28px #0b4a2d99}
+.tmC{background:#fff;border:2px solid #b4cf86;border-radius:22px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.tmC:hover .tmP{border-bottom-color:var(--green)}
+.tmC:hover{border-color:var(--green);transform:translateY(-4px);box-shadow:0 22px 40px -28px #0b4a2d99}
 .tmC[hidden]{display:none}
-.tmP{aspect-ratio:4/4.4;background:var(--sage);display:grid;place-items:end center}
+.tmP{border-bottom:2px solid #b4cf86;aspect-ratio:4/4.4;background:var(--sage);display:grid;place-items:end center}
 .tmP svg{width:78%;display:block}
 .tmB{padding:18px 20px 22px;display:flex;flex-direction:column;gap:4px;flex:1}
 .tmB b{font-size:18px;color:var(--ink);}
@@ -309,6 +310,17 @@ document.getElementById('rvPrev').onclick=()=>go(-1);document.getElementById('rv
 T.addEventListener('scroll',()=>requestAnimationFrame(mark));
 T.addEventListener('keydown',e=>{if(e.key=='ArrowRight'){e.preventDefault();go(1)}if(e.key=='ArrowLeft'){e.preventDefault();go(-1)}});
 mark();
+})();
+
+// team
+(()=>{
+const T=[["Имя Фамилия","Стоматолог-терапевт","lech",0],["Имя Фамилия","Хирург-имплантолог","impl",1],["Имя Фамилия","Стоматолог-ортопед","prot",1],["Имя Фамилия","Детский стоматолог","kids",4],["Имя Фамилия","Гигиенист","lech",3]];
+const F=[["all","Все"],["lech","Лечение"],["impl","Имплантация"],["prot","Протезирование"],["kids","Детям"]];
+const av='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="44" r="19" fill="#c6b9a1"/><path d="M14 120c2-30 20-46 46-46s44 16 46 46z" fill="#fff"/><path d="M46 76l14 22 14-22" fill="none" stroke="#c6b9a1" stroke-width="3"/><path d="M60 98v22" stroke="#c6b9a1" stroke-width="3"/></svg>';
+const G=document.getElementById('tmG'),Fb=document.getElementById('tmF');
+G.innerHTML=T.map(([n,r,k,s])=>`<article class="tmC" data-k="${k}"><div class="tmP">${av}</div><div class="tmB"><b>${n}</b><span>${r}</span><button class="open" data-s="${s}">Записаться</button></div></article>`).join('');
+Fb.innerHTML=F.map(([k,t],i)=>`<button aria-pressed="${i==0}" data-k="${k}">${t}</button>`).join('');
+Fb.onclick=e=>{const b=e.target.closest('button');if(!b)return;Fb.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));G.querySelectorAll('.tmC').forEach(c=>c.hidden=b.dataset.k!='all'&&c.dataset.k!=b.dataset.k)};
 })();
 </script>
 </body>
