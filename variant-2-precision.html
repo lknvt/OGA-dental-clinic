@@ -135,23 +135,96 @@ form>label[for=p]{font-size:14px;color:var(--dim);margin-bottom:-8px}
 .rvNote{margin-top:18px;font-size:14px;color:var(--dim);text-align:center}
 .rvNote a{color:var(--lime)}
 @media(max-width:860px){.rvNav{display:none}}
+
+.hsw{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:14px 0 0;font-size:13px;color:var(--dim)}
+.hsw button{all:unset;cursor:pointer;padding:6px 14px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--line);font-weight:600;color:var(--lime)}
+.hsw button[aria-selected=true]{background:var(--lime);color:#fff;box-shadow:none}
+.hsw button:focus-visible{outline:3px solid var(--lime)}
+[hidden]{display:none!important}
+.jaw{display:flex;gap:6px;margin-bottom:6px;justify-content:center}
+.jaw button{all:unset;cursor:pointer;padding:8px 16px;border-radius:99px;font-size:14px;font-weight:600;color:var(--dim);box-shadow:inset 0 0 0 1.5px var(--line)}
+.jaw button[aria-selected=true]{background:var(--lime);color:#fff;box-shadow:none}
+.jaw button:focus-visible{outline:3px solid var(--lime)}
+.tooth{fill:url(#enam);stroke:#86a893;stroke-width:1.4}
+.tooth.on{fill:var(--lime);stroke:#0b5a33}
+.tg{stroke:#a9c2b2;stroke-width:1.3;fill:none;stroke-linecap:round;pointer-events:none}
+.on+.tg,.tg.on{stroke:#ffffffaa}
+.toothG{cursor:pointer;outline:none}
+.toothG:hover .tooth{fill:#e3f1da}
+.toothG:focus-visible .tooth{stroke:var(--lime);stroke-width:3.500}
+.toothG .tooth{transform:none}
+.ticks{list-style:none;padding:0;margin:24px 0 6px;display:grid;gap:10px;color:var(--white)}
+.ticks li{padding-left:30px;position:relative}
+.ticks li:before{content:"";position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;background:var(--lime)}
+.ticks li:after{content:"";position:absolute;left:6px;top:8px;width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(40deg) scale(.8)}
+.journey{display:grid;gap:12px;position:relative}
+.jstep{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start;padding:20px 22px;border-radius:18px;background:var(--bg2);border:1px solid var(--line);transition:.2s}
+.jstep:hover{border-color:var(--lime)}
+.jstep[aria-expanded=true]{background:#fff;border-color:var(--lime);box-shadow:0 22px 40px -28px #0c4a2f88}
+.jstep:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.jstep i{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:#fff;border:2px solid var(--line);font:800 20px Manrope;font-style:normal;color:var(--lime)}
+.jstep[aria-expanded=true] i{background:var(--lime);border-color:var(--lime);color:#fff}
+.jstep b{display:block;font:800 21px Manrope}
+.jstep span{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s;color:var(--dim)}
+.jstep span em{overflow:hidden;font-style:normal}
+.jstep[aria-expanded=true] span{grid-template-rows:1fr}
+.jstep[aria-expanded=true] span em{padding-top:8px}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 30px 60px -36px #0c4a2f88}
+.qcard h2{font-size:30px;margin-bottom:8px}
+.qcard label{display:block;font-size:14px;color:var(--dim);margin:14px 0 4px}
+.qcard>.qin>input{width:100%;padding:15px 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);font:inherit;color:var(--white)}
+.qcard>.qin>input:focus{outline:0;border-color:var(--lime)}
+.qcard .btn{margin-top:12px}.qn{margin:12px 0 0!important;font-size:14px;text-align:center;color:var(--dim)}
+.qok{display:none;padding:20px 0}.qcard.sent .qin{display:none}.qcard.sent .qok{display:block}
+.qok h3{font-size:28px;margin-bottom:6px;color:var(--lime)}
 </style>
 </head>
 <body>
 <div class="wrap">
 <div class="bar"><b>OGA<span>.</span>dental</b><a class="btn" href="#book">Записаться</a></div>
 
-<div class="hero">
+<div class="hsw" role="tablist" aria-label="Вариант первого экрана"><span>Первый экран:</span>
+  <button role="tab" data-h="a">A · Схема зубов</button><button role="tab" data-h="b">B · Три шага</button><button role="tab" data-h="c">C · Запись</button></div>
+
+<!-- A -->
+<div class="hero hv" data-h="a">
   <div>
     <h1>Покажите, где болит. <em>Мы объясним, что делать</em></h1>
-    <p>Нажмите на зуб на схеме. Мы объясним, чем обычно лечат этот тип зубов, и подскажем, как записаться.</p>
+    <p>Выберите зуб на схеме. Мы расскажем, чем обычно лечат этот тип зубов, и подскажем, как записаться.</p>
     <a class="btn" href="#book">Записаться на осмотр</a>
   </div>
   <div class="chart">
-    <p class="hint">Верхняя челюсть сверху, нижняя снизу</p>
-    <svg id="chart" viewBox="0 0 520 380" role="group" aria-label="Схема зубов"></svg>
+    <div class="jaw" role="tablist" aria-label="Челюсть"><button role="tab" aria-selected="true" data-u="1">Верхняя челюсть</button><button role="tab" aria-selected="false" data-u="0">Нижняя челюсть</button></div>
+    <svg id="chart" viewBox="0 0 520 330" role="group" aria-label="Схема зубов"></svg>
     <div class="readout" id="read" aria-live="polite"><h3>Выберите зуб</h3><p>Можно нажимать мышью или переходить клавишей Tab.</p></div>
   </div>
+</div>
+
+<!-- B -->
+<div class="hero hv" data-h="b" hidden>
+  <div>
+    <h1>Три шага от звонка до <em>здоровой улыбки</em></h1>
+    <p>Мы не торопим. Сначала осмотр и план, и только потом лечение. Нажмите на шаг, чтобы узнать подробности.</p>
+    <a class="btn" href="#book">Записаться на осмотр</a>
+  </div>
+  <div class="journey" id="journey"></div>
+</div>
+
+<!-- C -->
+<div class="hero hv" data-h="c" hidden>
+  <div>
+    <h1>Запишитесь на осмотр: <em>расскажем, что нужно сделать</em></h1>
+    <ul class="ticks"><li>Осмотр и план лечения до начала работы</li><li>Лечим взрослых и детей</li><li>Пакет с инструментами вскрываем при вас</li></ul>
+  </div>
+  <form class="qcard" id="qf" novalidate>
+    <div class="qin"><h2>Запись за минуту</h2>
+      <label for="qn">Имя</label><input id="qn" autocomplete="name">
+      <label for="qp">Телефон</label><div class="phf"><span class="cc">+996</span><input id="qp" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="555 123 456" maxlength="11" aria-label="Номер телефона, Кыргызстан"></div>
+      <small class="err" hidden>Введите 9 цифр, например 555 123 456</small>
+      <button class="btn" style="width:100%">Перезвоните мне</button>
+      <p class="qn">Администратор позвонит и подберёт время.</p></div>
+    <div class="qok" role="status"><h3>Спасибо!</h3><p>Перезвоним на <b id="qokp"></b>. Это демо: заявка никуда не отправляется.</p></div>
+  </form>
 </div>
 </div>
 
@@ -208,20 +281,56 @@ const kinds={
  canine:["Клык","Опора всей улыбки. Прочный зуб: при потере восстанавливаем имплантом или коронкой.","Протезирование","Импланты"],
  incisor:["Резец (передний)","Самые заметные зубы: сколы, цвет, форма. Подбираем виниры или реставрацию под соседние зубы.","Эстетика","Протезирование"]};
 const ch=document.getElementById('chart'),rd=document.getElementById('read');
-// FDI numbering: arch of 16
-function arch(upper){const cx=260,cy=upper?190:190,rx=215,ry=150;let out='';
- for(let i=0;i<16;i++){const t=Math.PI*(0.04+0.92*i/15);const x=cx-Math.cos(t)*rx*(1),y=upper?cy-Math.sin(t)*ry:cy+Math.sin(t)*ry;
-  const d=Math.abs(i-7.5);const type=d<2?'incisor':d<3?'canine':d<5?'pre':'molar';
-  const w={incisor:20,canine:22,pre:24,molar:32}[type],h={incisor:30,canine:30,pre:26,molar:28}[type];
-  const q=i<8?(upper?1:4):(upper?2:3),pos=i<8?8-i:i-7,num=q*10+pos;
-  const rot=(Math.atan2(y-cy,x-cx)*180/Math.PI)+90;
-  out+=`<g transform="translate(${x} ${y}) rotate(${rot})"><rect class="tooth" tabindex="0" role="button" aria-label="Зуб ${num}, ${kinds[type][0]}" data-n="${num}" data-k="${type}" x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="${type=='molar'?7:10}"/></g>`}
- return out}
-ch.innerHTML=arch(true)+arch(false);
-function pick(el){ch.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));el.classList.add('on');
- const k=kinds[el.dataset.k];rd.innerHTML=`<h3>Зуб ${el.dataset.n} · ${k[0]}</h3><p>${k[1]} Обычно это направления «${k[2]}» и «${k[3]}». <a href="#book">Записаться</a></p>`}
-ch.addEventListener('click',e=>e.target.classList.contains('tooth')&&pick(e.target));
-ch.addEventListener('keydown',e=>{if((e.key=='Enter'||e.key==' ')&&e.target.classList.contains('tooth')){e.preventDefault();pick(e.target)}});
+// occlusal view: teeth are placed along an arch by real widths
+const SPEC={incisor:[21,15],canine:[23,19],pre:[25,24],molar:[36,35]};
+const ORDER=['incisor','incisor','canine','pre','pre','molar','molar','molar'];
+function drawArch(upper){
+  const cx=260,cy=upper?300:30,rx=196,ry=250,dir=upper?-1:1;
+  const pt=a=>[cx+rx*Math.sign(Math.cos(a))*Math.pow(Math.abs(Math.cos(a)),.82),cy+dir*ry*Math.pow(Math.abs(Math.sin(a)),1.15)];
+  const N=800,P=[];let L=0,prev=null;
+  for(let i=0;i<=N;i++){const a=Math.PI*(0.04+0.92*i/N),q=pt(a);if(prev)L+=Math.hypot(q[0]-prev[0],q[1]-prev[1]);P.push([q[0],q[1],L]);prev=q}
+  const types=[...ORDER].reverse().concat(ORDER);
+  const base=types.reduce((x,t)=>x+SPEC[t][0]+2,0),sc=Math.min(1.5,(L*.97)/base),widths=types.map(t=>(SPEC[t][0]+2)*sc),total=widths.reduce((x,y)=>x+y,0),start=(L-total)/2;let acc=start,out='';
+  const at=d=>{let k=0;while(k<P.length-1&&P[k][2]<d)k++;return k};
+  // gum band
+  out+=`<path d="${P.filter((_,i)=>i%10==0).map((q,i)=>(i?'L':'M')+q[0].toFixed(1)+' '+q[1].toFixed(1)).join('')}" fill="none" stroke="#f3dfdd" stroke-width="${(58*sc).toFixed(0)}" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`;
+  widths.forEach((w,i)=>{const mid=acc+w/2,k=at(mid),k1=Math.max(0,k-4),k2=Math.min(P.length-1,k+4);
+    const x=P[k][0],y=P[k][1],ang=Math.atan2(P[k2][1]-P[k1][1],P[k2][0]-P[k1][0])*180/Math.PI;
+    acc+=w;const t=types[i],tw=SPEC[t][0]*sc,td=SPEC[t][1]*sc,left=i<8,pos=left?8-i:i-7,q=upper?(left?1:2):(left?4:3),num=q*10+pos;
+    const nameS={incisor:'Резец',canine:'Клык',pre:'Премоляр',molar:'Моляр'}[t];
+    let shape,grooves='';
+    if(t=='incisor')shape=`<rect x="${-tw/2}" y="${-td/2}" width="${tw}" height="${td}" rx="${td/2.6}"/>`;
+    else if(t=='canine')shape=`<path d="M${-tw/2} ${td/2-2}C${-tw/2} ${-td*.2} ${-tw*.2} ${-td/2} 0 ${-td/2-3}C${tw*.2} ${-td/2} ${tw/2} ${-td*.2} ${tw/2} ${td/2-2}Q0 ${td/2+3} ${-tw/2} ${td/2-2}Z"/>`;
+    else if(t=='pre'){shape=`<rect x="${-tw/2}" y="${-td/2}" width="${tw}" height="${td}" rx="${td/2.4}"/>`;grooves=`<path class="tg" d="M0 ${-td*.26}Q${tw*.08} 0 0 ${td*.26}"/>`}
+    else{shape=`<rect x="${-tw/2}" y="${-td/2}" width="${tw}" height="${td}" rx="9"/>`;grooves=`<path class="tg" d="M${-tw*.05} ${-td*.3}Q${tw*.12} 0 ${-tw*.05} ${td*.3}M${-tw*.28} ${-td*.05}Q0 ${td*.1} ${tw*.28} ${-td*.05}"/>`}
+    out+=`<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${ang.toFixed(1)})"><g class="toothG" tabindex="0" role="button" aria-label="Зуб ${num}, ${kinds[t][0]}" data-n="${num}" data-k="${t}"><g class="tooth">${shape}</g>${grooves}</g></g>`;
+  });
+  ch.innerHTML=`<defs><radialGradient id="enam" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e6eee3"/></radialGradient></defs>`+out;
+}
+drawArch(true);
+function pick(g){ch.querySelectorAll('.tooth.on').forEach(e=>e.classList.remove('on'));g.querySelector('.tooth').classList.add('on');
+ const k=kinds[g.dataset.k];rd.innerHTML=`<h3>Зуб ${g.dataset.n} · ${k[0]}</h3><p>${k[1]} Обычно это направления «${k[2]}» и «${k[3]}». <a href="#book">Записаться</a></p>`}
+ch.addEventListener('click',e=>{const g=e.target.closest('.toothG');g&&pick(g)});
+ch.addEventListener('keydown',e=>{const g=e.target.closest&&e.target.closest('.toothG');if(g&&(e.key=='Enter'||e.key==' ')){e.preventDefault();pick(g)}});
+document.querySelector('.jaw').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.jaw button').forEach(x=>x.setAttribute('aria-selected',x==b));drawArch(b.dataset.u=='1');rd.innerHTML='<h3>Выберите зуб</h3><p>Можно нажимать мышью или переходить клавишей Tab.</p>'};
+
+// hero switcher
+const hs=document.querySelector('.hsw');
+function hero(k){document.querySelectorAll('.hv').forEach(h=>h.hidden=h.dataset.h!=k);hs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.h==k));try{history.replaceState(null,'','#hero-'+k)}catch(e){}}
+hs.onclick=e=>{const b=e.target.closest('button');b&&hero(b.dataset.h)};
+addEventListener('hashchange',()=>{const m=location.hash.match(/hero-([abc])/);m&&hero(m[1])});
+hero((location.hash.match(/hero-([abc])/)||[0,'a'])[1]);
+
+// B: journey
+const J=[["Осмотр","Врач осматривает зубы и слушает, что вас беспокоит. Если нужно, назначает снимок."],["План","Объясняем, что нужно сделать, в каком порядке и из каких этапов состоит лечение. Решение принимаете вы."],["Лечение","Работаем по плану. Инструменты вскрываем при вас из стерильного пакета."]];
+const jn=document.getElementById('journey');
+jn.innerHTML=J.map(([t,d],i)=>`<button class="jstep" aria-expanded="${i==0}"><i>${i+1}</i><div><b>${t}</b><span><em>${d}</em></span></div></button>`).join('');
+jn.onclick=e=>{const b=e.target.closest('.jstep');if(!b)return;jn.querySelectorAll('.jstep').forEach(x=>x.setAttribute('aria-expanded',x==b))};
+
+// C: quick form
+const qf=document.getElementById('qf'),qp=document.getElementById('qp'),qn=document.getElementById('qn');
+fmtPhone(qp);
+qf.onsubmit=e=>{e.preventDefault();const er=qf.querySelector('.err');er.hidden=true;if(!qn.value.trim()){qn.focus();return}if(!phOk(qp.value)){er.hidden=false;qp.focus();return}document.getElementById('qokp').textContent='+996 '+qp.value;qf.classList.add('sent')};
 
 // tabs
 const D=[["Терапия","Лечение кариеса и пульпита","Бережно убираем поражённые ткани и восстанавливаем форму зуба.",["Лечение кариеса","Лечение каналов","Реставрация"]],
@@ -243,7 +352,7 @@ function show(i){lane.querySelectorAll('.node').forEach((n,j)=>{n.classList.togg
 lane.onclick=e=>{const n=e.target.closest('.node');n&&show(+n.dataset.i)};show(0);
 let tm;run.onclick=()=>{clearInterval(tm);let i=0;show(0);tm=setInterval(()=>{i++;if(i>5){clearInterval(tm);return}show(i)},1400)};
 
-function fmtPhone(el){el.addEventListener('input',()=>{const d=el.value.replace(/\D/g,'').slice(0,9);el.value=[d.slice(0,3),d.slice(3,6),d.slice(6,9)].filter(Boolean).join(' ');const pe=document.getElementById('perr');if(pe)pe.hidden=true})}
+function fmtPhone(el){el.addEventListener('input',()=>{const d=el.value.replace(/\D/g,'').slice(0,9);el.value=[d.slice(0,3),d.slice(3,6),d.slice(6,9)].filter(Boolean).join(' ');const f=el.closest('form'),pe=f&&f.querySelector('.err');if(pe)pe.hidden=true})}
 const phOk=v=>v.replace(/\D/g,'').length==9;
 fmtPhone(p);
 f.onsubmit=e=>{e.preventDefault();perr.hidden=true;if(!n.value.trim()){n.focus();return}if(!phOk(p.value)){perr.hidden=false;p.focus();return}okp.textContent='+996 '+p.value;f.style.display='none';ok.style.display='block'};
