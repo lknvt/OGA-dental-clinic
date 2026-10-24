@@ -183,11 +183,8 @@ form>label[for=p]{font-size:14px;color:var(--dim);margin-bottom:-8px}
 <div class="wrap">
 <div class="bar"><b>OGA<span>.</span>dental</b><a class="btn" href="#book">Записаться</a></div>
 
-<div class="hsw" role="tablist" aria-label="Вариант первого экрана"><span>Первый экран:</span>
-  <button role="tab" data-h="a">A · Схема зубов</button><button role="tab" data-h="b">B · Три шага</button><button role="tab" data-h="c">C · Запись</button></div>
-
 <!-- A -->
-<div class="hero hv" data-h="a">
+<div class="hero">
   <div>
     <h1>Покажите, где болит. <em>Мы объясним, что делать</em></h1>
     <p>Выберите зуб на схеме. Мы расскажем, чем обычно лечат этот тип зубов, и подскажем, как записаться.</p>
@@ -200,32 +197,6 @@ form>label[for=p]{font-size:14px;color:var(--dim);margin-bottom:-8px}
   </div>
 </div>
 
-<!-- B -->
-<div class="hero hv" data-h="b" hidden>
-  <div>
-    <h1>Три шага от звонка до <em>здоровой улыбки</em></h1>
-    <p>Мы не торопим. Сначала осмотр и план, и только потом лечение. Нажмите на шаг, чтобы узнать подробности.</p>
-    <a class="btn" href="#book">Записаться на осмотр</a>
-  </div>
-  <div class="journey" id="journey"></div>
-</div>
-
-<!-- C -->
-<div class="hero hv" data-h="c" hidden>
-  <div>
-    <h1>Запишитесь на осмотр: <em>расскажем, что нужно сделать</em></h1>
-    <ul class="ticks"><li>Осмотр и план лечения до начала работы</li><li>Лечим взрослых и детей</li><li>Пакет с инструментами вскрываем при вас</li></ul>
-  </div>
-  <form class="qcard" id="qf" novalidate>
-    <div class="qin"><h2>Запись за минуту</h2>
-      <label for="qn">Имя</label><input id="qn" autocomplete="name">
-      <label for="qp">Телефон</label><div class="phf"><span class="cc">+996</span><input id="qp" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="555 123 456" maxlength="11" aria-label="Номер телефона, Кыргызстан"></div>
-      <small class="err" hidden>Введите 9 цифр, например 555 123 456</small>
-      <button class="btn" style="width:100%">Перезвоните мне</button>
-      <p class="qn">Администратор позвонит и подберёт время.</p></div>
-    <div class="qok" role="status"><h3>Спасибо!</h3><p>Перезвоним на <b id="qokp"></b>. Это демо: заявка никуда не отправляется.</p></div>
-  </form>
-</div>
 </div>
 
 <section style="padding:36px 0"><div class="wrap"><div class="trust">
@@ -313,24 +284,6 @@ function pick(g){ch.querySelectorAll('.tooth.on').forEach(e=>e.classList.remove(
 ch.addEventListener('click',e=>{const g=e.target.closest('.toothG');g&&pick(g)});
 ch.addEventListener('keydown',e=>{const g=e.target.closest&&e.target.closest('.toothG');if(g&&(e.key=='Enter'||e.key==' ')){e.preventDefault();pick(g)}});
 document.querySelector('.jaw').onclick=e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.jaw button').forEach(x=>x.setAttribute('aria-selected',x==b));drawArch(b.dataset.u=='1');rd.innerHTML='<h3>Выберите зуб</h3><p>Можно нажимать мышью или переходить клавишей Tab.</p>'};
-
-// hero switcher
-const hs=document.querySelector('.hsw');
-function hero(k){document.querySelectorAll('.hv').forEach(h=>h.hidden=h.dataset.h!=k);hs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.h==k));try{history.replaceState(null,'','#hero-'+k)}catch(e){}}
-hs.onclick=e=>{const b=e.target.closest('button');b&&hero(b.dataset.h)};
-addEventListener('hashchange',()=>{const m=location.hash.match(/hero-([abc])/);m&&hero(m[1])});
-hero((location.hash.match(/hero-([abc])/)||[0,'a'])[1]);
-
-// B: journey
-const J=[["Осмотр","Врач осматривает зубы и слушает, что вас беспокоит. Если нужно, назначает снимок."],["План","Объясняем, что нужно сделать, в каком порядке и из каких этапов состоит лечение. Решение принимаете вы."],["Лечение","Работаем по плану. Инструменты вскрываем при вас из стерильного пакета."]];
-const jn=document.getElementById('journey');
-jn.innerHTML=J.map(([t,d],i)=>`<button class="jstep" aria-expanded="${i==0}"><i>${i+1}</i><div><b>${t}</b><span><em>${d}</em></span></div></button>`).join('');
-jn.onclick=e=>{const b=e.target.closest('.jstep');if(!b)return;jn.querySelectorAll('.jstep').forEach(x=>x.setAttribute('aria-expanded',x==b))};
-
-// C: quick form
-const qf=document.getElementById('qf'),qp=document.getElementById('qp'),qn=document.getElementById('qn');
-fmtPhone(qp);
-qf.onsubmit=e=>{e.preventDefault();const er=qf.querySelector('.err');er.hidden=true;if(!qn.value.trim()){qn.focus();return}if(!phOk(qp.value)){er.hidden=false;qp.focus();return}document.getElementById('qokp').textContent='+996 '+qp.value;qf.classList.add('sent')};
 
 // tabs
 const D=[["Терапия","Лечение кариеса и пульпита","Бережно убираем поражённые ткани и восстанавливаем форму зуба.",["Лечение кариеса","Лечение каналов","Реставрация"]],
