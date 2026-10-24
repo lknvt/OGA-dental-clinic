@@ -177,6 +177,22 @@ form>label[for=p]{font-size:14px;color:var(--dim);margin-bottom:-8px}
 .qcard .btn{margin-top:12px}.qn{margin:12px 0 0!important;font-size:14px;text-align:center;color:var(--dim)}
 .qok{display:none;padding:20px 0}.qcard.sent .qin{display:none}.qcard.sent .qok{display:block}
 .qok h3{font-size:28px;margin-bottom:6px;color:var(--lime)}
+
+dialog#bk{margin:auto;border:0;border-radius:20px;padding:0;width:min(460px,92vw);box-shadow:0 40px 80px -30px #0b4a2d99;background:#fff;color:var(--white)}
+dialog#bk::backdrop{background:#0b2a1a88;backdrop-filter:blur(3px)}
+.bkb{padding:30px;position:relative}
+#bkf{display:block;padding:0;margin:0;box-shadow:none;background:none;border:0;border-radius:0}
+.bkb h2{font-size:28px;color:var(--white);margin-bottom:6px;}
+.bks{color:var(--dim)}.bkc{font-weight:600;color:var(--lime);margin-top:10px}
+.bkb label{display:block;font-weight:600;font-size:14px;color:var(--dim);margin:16px 0 6px}
+.bkb input#bn{width:100%;padding:14px 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);font:inherit;color:inherit}
+.bkb input#bn:focus{outline:0;border-color:var(--lime)}
+.bkb .phf input{flex:1;min-width:0;width:auto;border:0;margin:0;background:transparent;padding:14px 16px;font:inherit;color:inherit;outline:0;border-radius:0}
+.bkx{all:unset;cursor:pointer;position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:22px;color:var(--dim);background:var(--bg2)}
+.bkx:focus-visible{outline:3px solid var(--lime)}
+.bkd{display:none;text-align:center;padding:30px 0 6px}.bkd p{color:var(--dim)}
+.bkb.sent #bkf{display:none}.bkb.sent .bkd{display:block}
+.bko{background:transparent!important;color:var(--lime)!important;box-shadow:inset 0 0 0 1.5px var(--lime);margin-top:18px}
 </style>
 </head>
 <body>
@@ -245,6 +261,21 @@ form>label[for=p]{font-size:14px;color:var(--dim);margin-bottom:-8px}
 </div></section>
 <footer><div class="wrap">Дизайн-концепция 2 из 3 · адрес и телефон добавим после согласования</div></footer>
 
+
+<dialog id="bk" aria-labelledby="bkt"><div class="bkb" id="bkb">
+  <button class="bkx" id="bkx" aria-label="Закрыть">×</button>
+  <form id="bkf" novalidate>
+    <h2 id="bkt">Запись на приём</h2>
+    <p class="bks">Оставьте имя и номер, мы перезвоним и подберём время.</p>
+    <p class="bkc" id="bkc" hidden></p>
+    <label for="bn">Имя</label><input id="bn" autocomplete="name">
+    <label for="bp">Телефон</label><div class="phf"><span class="cc">+996</span><input id="bp" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="555 123 456" maxlength="11" aria-label="Номер телефона, Кыргызстан"></div>
+    <small class="err" hidden>Введите 9 цифр, например 555 123 456</small>
+    <button class="btn" style="width:100%;margin-top:14px">Записаться</button>
+    <p class="bks" style="font-size:13px;text-align:center;margin-top:10px">Демо: заявка никуда не отправляется.</p>
+  </form>
+  <div class="bkd" role="status"><h2>Спасибо!</h2><p id="bks2"></p><button class="btn bko" id="bkx2" type="button">Закрыть</button></div>
+</div></dialog>
 <script>
 const kinds={
  molar:["Моляр (жевательный)","Здесь чаще всего кариес в бороздках и нужна пломба или коронка. Если зуба нет, ставят имплант.","Лечение","Импланты"],
@@ -339,6 +370,19 @@ document.getElementById('rvPrev').onclick=()=>go(-1);document.getElementById('rv
 T.addEventListener('scroll',()=>requestAnimationFrame(mark));
 T.addEventListener('keydown',e=>{if(e.key=='ArrowRight'){e.preventDefault();go(1)}if(e.key=='ArrowLeft'){e.preventDefault();go(-1)}});
 mark();
+})();
+
+// booking dialog
+(()=>{
+const bk=document.getElementById('bk'),bb=document.getElementById('bkb'),bn=document.getElementById('bn'),bp=document.getElementById('bp'),bc=document.getElementById('bkc'),bf=document.getElementById('bkf');
+fmtPhone(bp);
+document.addEventListener('click',e=>{const a=e.target.closest('a[href="#book"]');if(!a)return;e.preventDefault();
+ const card=a.closest('.tmC');if(card){bc.textContent='Врач: '+card.querySelector('.tmB span').textContent;bc.hidden=false}else{bc.hidden=true}
+ bb.classList.remove('sent');bk.showModal()});
+document.getElementById('bkx').onclick=document.getElementById('bkx2').onclick=()=>bk.close();
+bk.addEventListener('click',e=>{if(e.target===bk)bk.close()});
+bf.onsubmit=e=>{e.preventDefault();const er=bf.querySelector('.err');er.hidden=true;if(!bn.value.trim()){bn.focus();return}if(!phOk(bp.value)){er.hidden=false;bp.focus();return}
+ document.getElementById('bks2').textContent=bn.value.trim()+', мы перезвоним на +996 '+bp.value+(bc.hidden?'':'. '+bc.textContent)+'.';bb.classList.add('sent')};
 })();
 </script>
 </body>
