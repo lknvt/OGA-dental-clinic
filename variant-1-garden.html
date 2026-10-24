@@ -168,6 +168,11 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
 .tmB a:hover,.tmB button:hover{text-decoration:underline}
 .tmB a:focus-visible,.tmB button:focus-visible{outline:3px solid var(--forest);outline-offset:3px}
 .tmNote{margin-top:22px;font-size:14px;color:var(--muted)}
+.phf{display:flex;align-items:stretch;border:2px solid var(--mist);border-radius:14px;background:var(--paper);overflow:hidden;margin:6px 0 6px}
+.phf .cc{padding:0 14px;display:grid;place-items:center;font-weight:700;background:var(--mist);white-space:nowrap}
+form .phf input,.mb .phf input{flex:1;min-width:0;width:auto;border:0;margin:0;background:transparent;padding:14px 16px;font:inherit;color:inherit;outline:0;border-radius:0}
+.phf:focus-within{border-color:var(--forest)}
+.err{display:block;color:#b3261e;font-size:13px;margin:0 0 12px}
 </style>
 </head>
 <body>
@@ -224,14 +229,11 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
   </div>
   <form id="form" novalidate>
     <div class="fields">
-      <fieldset class="chips"><legend>Что беспокоит</legend>
-        <script>document.write(["Осмотр","Болит зуб","Имплантация","Коронки","Гигиена","Ребёнку"].map((t,i)=>`<input type="radio" name="t" id="c${i}" ${i?'':'checked'}><label for="c${i}">${t}</label>`).join(''))</script>
-      </fieldset>
       <label class="lbl" for="n">Имя</label><input class="f" id="n" required autocomplete="name">
-      <label class="lbl" for="p">Телефон</label><input class="f" id="p" type="tel" required autocomplete="tel" placeholder="+7">
+      <label class="lbl" for="p">Телефон</label><div class="phf"><span class="cc">+996</span><input id="p" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="555 123 456" maxlength="11" aria-label="Номер телефона, Кыргызстан" required></div><small class="err" id="perr" hidden>Введите 9 цифр, например 555 123 456</small>
       <button class="btn" style="width:100%">Отправить заявку</button>
     </div>
-    <div class="ok" role="status"><h3>Спасибо, <span id="who"></span>!</h3><p>Это демо-форма: заявка никуда не уходит.</p></div>
+    <div class="ok" role="status"><h3>Спасибо, <span id="who"></span>!</h3><p>Перезвоним на <b id="whoP"></b>. Это демо: заявка никуда не уходит.</p></div>
   </form>
 </div></section>
 </main>
@@ -267,7 +269,10 @@ function go(i){document.querySelectorAll('.step').forEach((s,j)=>{s.setAttribute
 st.onclick=e=>{const s=e.target.closest('.step');if(s)go(+s.dataset.i)};go(0);
 
 // form
-form.onsubmit=e=>{e.preventDefault();if(!n.value.trim()||!p.value.trim()){(n.value.trim()?p:n).focus();return}who.textContent=n.value.trim();form.classList.add('sent')};
+function fmtPhone(el){el.addEventListener('input',()=>{const d=el.value.replace(/\D/g,'').slice(0,9);el.value=[d.slice(0,3),d.slice(3,6),d.slice(6,9)].filter(Boolean).join(' ');const pe=document.getElementById('perr');if(pe)pe.hidden=true})}
+const phOk=v=>v.replace(/\D/g,'').length==9;
+fmtPhone(p);
+form.onsubmit=e=>{e.preventDefault();perr.hidden=true;if(!n.value.trim()){n.focus();return}if(!phOk(p.value)){perr.hidden=false;p.focus();return}who.textContent=n.value.trim();whoP.textContent='+996 '+p.value;form.classList.add('sent')};
 
 // team
 (()=>{

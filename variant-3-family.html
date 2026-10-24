@@ -137,6 +137,11 @@ dialog::backdrop{background:#0b2a1a88;backdrop-filter:blur(3px)}
 .tmB a:hover,.tmB button:hover{text-decoration:underline}
 .tmB a:focus-visible,.tmB button:focus-visible{outline:3px solid var(--green);outline-offset:3px}
 .tmNote{margin-top:22px;font-size:14px;color:var(--muted)}
+.phf{display:flex;align-items:stretch;border:1.5px solid var(--line);border-radius:12px;background:#fff;overflow:hidden;margin:6px 0 6px}
+.phf .cc{padding:0 14px;display:grid;place-items:center;font-weight:700;background:var(--sage);white-space:nowrap}
+form .phf input,.mb .phf input{flex:1;min-width:0;width:auto;border:0;margin:0;background:transparent;padding:13px 14px;font:inherit;color:inherit;outline:0;border-radius:0}
+.phf:focus-within{border-color:var(--green)}
+.err{display:block;color:#b3261e;font-size:13px;margin:0 0 12px}
 </style>
 </head>
 <body>
@@ -197,14 +202,12 @@ dialog::backdrop{background:#0b2a1a88;backdrop-filter:blur(3px)}
   <button class="x" id="close" aria-label="Закрыть">×</button>
   <form id="f" novalidate>
     <h2 id="dt">Запись на приём</h2>
-    <p style="color:var(--muted)">Выберите удобное время, мы подтвердим по телефону.</p>
-    <label for="svc">Услуга</label><select id="svc"></select>
-    <span class="l">День</span><div class="slots" id="days" role="group" aria-label="День"></div>
-    <span class="l">Время</span><div class="slots" id="times" role="group" aria-label="Время"></div>
+    <p style="color:var(--muted)">Оставьте имя и номер, мы перезвоним и подберём время.</p>
+    <p id="svc" style="font-weight:600;color:var(--green);margin-top:12px" hidden></p>
     <label for="nm">Имя</label><input class="f" id="nm" autocomplete="name">
-    <label for="ph">Телефон</label><input class="f" id="ph" type="tel" autocomplete="tel" placeholder="+7">
+    <label for="p">Телефон</label><div class="phf"><span class="cc">+996</span><input id="p" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="555 123 456" maxlength="11" aria-label="Номер телефона, Кыргызстан" required></div><small class="err" id="perr" hidden>Введите 9 цифр, например 555 123 456</small>
     <button class="btn">Записаться</button>
-    <p class="note">Демо: заявка никуда не отправляется, время для примера.</p>
+    <p class="note">Демо: заявка никуда не отправляется.</p>
   </form>
   <div class="done" role="status"><h2>Спасибо!</h2><p id="sum" style="color:var(--muted)"></p><button class="btn out" id="ok2" style="margin-top:18px">Закрыть</button></div>
 </div></dialog>
@@ -219,7 +222,6 @@ const C=[
  ["Просто проверить","Осмотр и план","Осмотрим зубы и расскажем, что в порядке, а что стоит сделать в первую очередь.",["Осмотр","Рекомендации","План лечения, если он нужен"]]];
 const chips=document.getElementById('chips'),ans=document.getElementById('answer'),svc=document.getElementById('svc');
 chips.innerHTML=C.map(([t],i)=>`<button aria-pressed="false" data-i="${i}">${t}</button>`).join('');
-svc.innerHTML=C.map(c=>`<option>${c[1]}</option>`).join('');
 function pick(i){chips.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',i==j));const [,t,d,l]=C[i];
  ans.innerHTML=`<div><h2>${t}</h2><p>${d}</p></div><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul><button class="btn open" data-s="${i}">Записаться на это</button>`}
 chips.onclick=e=>{const b=e.target.closest('button');b&&pick(+b.dataset.i)};pick(0);
@@ -245,31 +247,17 @@ fl.onclick=e=>{const b=e.target.closest('button');if(!b)return;const q=b.parentE
 
 // booking dialog
 const dlg=document.getElementById('dlg'),mb=document.getElementById('mb');
-const dn=['вс','пн','вт','ср','чт','пт','сб'],mn=['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
-let day='',time='';
-const days=document.getElementById('days'),times=document.getElementById('times');
-const D=[];for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()+i);if(d.getDay()==0)continue;D.push(`${dn[d.getDay()]}, ${d.getDate()} ${mn[d.getMonth()]}`)}
-days.innerHTML=D.slice(0,5).map(x=>`<button type="button" aria-pressed="false">${x}</button>`).join('');
-times.innerHTML=['10:00','11:30','13:00','15:00','16:30','18:00'].map(x=>`<button type="button" aria-pressed="false">${x}</button>`).join('');
-function single(box,cb){box.onclick=e=>{const b=e.target.closest('button');if(!b)return;box.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));cb(b.textContent)}}
-single(days,v=>day=v);single(times,v=>time=v);
-document.addEventListener('click',e=>{const b=e.target.closest('.open');if(!b)return;if(b.dataset.s!=null)svc.selectedIndex=+b.dataset.s;mb.classList.remove('sent');dlg.showModal()});
+function fmtPhone(el){el.addEventListener('input',()=>{const d=el.value.replace(/\D/g,'').slice(0,9);el.value=[d.slice(0,3),d.slice(3,6),d.slice(6,9)].filter(Boolean).join(' ');const pe=document.getElementById('perr');if(pe)pe.hidden=true})}
+const phOk=v=>v.replace(/\D/g,'').length==9;
+const ph=document.getElementById('p');fmtPhone(ph);
+document.addEventListener('click',e=>{const b=e.target.closest('.open');if(!b)return;
+ if(b.dataset.s!=null){svc.textContent='Услуга: '+C[+b.dataset.s][1];svc.hidden=false}else{svc.hidden=true;svc.textContent=''}
+ mb.classList.remove('sent');dlg.showModal()});
 document.getElementById('close').onclick=document.getElementById('ok2').onclick=()=>dlg.close();
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
-document.getElementById('f').onsubmit=e=>{e.preventDefault();const nm=document.getElementById('nm'),ph=document.getElementById('ph');
- if(!nm.value.trim()){nm.focus();return}if(!ph.value.trim()){ph.focus();return}
- document.getElementById('sum').textContent=`${nm.value.trim()}, мы позвоним, чтобы подтвердить запись: ${svc.value}${day?', '+day:''}${time?', '+time:''}.`;mb.classList.add('sent')};
-
-// team
-(()=>{
-const T=[["Имя Фамилия","Стоматолог-терапевт","lech",0],["Имя Фамилия","Хирург-имплантолог","impl",1],["Имя Фамилия","Стоматолог-ортопед","prot",1],["Имя Фамилия","Детский стоматолог","kids",4],["Имя Фамилия","Гигиенист","lech",3]];
-const F=[["all","Все"],["lech","Лечение"],["impl","Имплантация"],["prot","Протезирование"],["kids","Детям"]];
-const av='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="44" r="19" fill="#c6b9a1"/><path d="M14 120c2-30 20-46 46-46s44 16 46 46z" fill="#fff"/><path d="M46 76l14 22 14-22" fill="none" stroke="#c6b9a1" stroke-width="3"/><path d="M60 98v22" stroke="#c6b9a1" stroke-width="3"/></svg>';
-const G=document.getElementById('tmG'),Fb=document.getElementById('tmF');
-G.innerHTML=T.map(([n,r,k,s])=>`<article class="tmC" data-k="${k}"><div class="tmP">${av}</div><div class="tmB"><b>${n}</b><span>${r}</span><button class="open" data-s="${s}">Записаться</button></div></article>`).join('');
-Fb.innerHTML=F.map(([k,t],i)=>`<button aria-pressed="${i==0}" data-k="${k}">${t}</button>`).join('');
-Fb.onclick=e=>{const b=e.target.closest('button');if(!b)return;Fb.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));G.querySelectorAll('.tmC').forEach(c=>c.hidden=b.dataset.k!='all'&&c.dataset.k!=b.dataset.k)};
-})();
+document.getElementById('f').onsubmit=e=>{e.preventDefault();const nm=document.getElementById('nm'),pe=document.getElementById('perr');pe.hidden=true;
+ if(!nm.value.trim()){nm.focus();return}if(!phOk(ph.value)){pe.hidden=false;ph.focus();return}
+ document.getElementById('sum').textContent=`${nm.value.trim()}, мы перезвоним на +996 ${ph.value}${svc.hidden?'':'. '+svc.textContent}.`;mb.classList.add('sent')};
 </script>
 </body>
 </html>

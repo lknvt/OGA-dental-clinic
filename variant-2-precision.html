@@ -106,7 +106,12 @@ footer{padding:30px 0;color:var(--dim);font-size:14px;border-top:1px solid var(-
 .tmB a:hover,.tmB button:hover{text-decoration:underline}
 .tmB a:focus-visible,.tmB button:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
 .tmNote{margin-top:22px;font-size:14px;color:var(--dim)}
-</style>
+.phf{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:10px;background:var(--bg2);overflow:hidden;margin:6px 0 6px}
+.phf .cc{padding:0 14px;display:grid;place-items:center;font-weight:700;background:var(--bg);white-space:nowrap}
+form .phf input,.mb .phf input{flex:1;min-width:0;width:auto;border:0;margin:0;background:transparent;padding:14px 16px;font:inherit;color:inherit;outline:0;border-radius:0}
+.phf:focus-within{border-color:var(--lime)}
+.err{display:block;color:#b3261e;font-size:13px;margin:0 0 12px}
+form>label[for=p]{font-size:14px;color:var(--dim);margin-bottom:-8px}</style>
 </head>
 <body>
 <div class="wrap">
@@ -157,11 +162,10 @@ footer{padding:30px 0;color:var(--dim);font-size:14px;border-top:1px solid var(-
   <div><h2>Первый визит: осмотр и план лечения</h2><p class="sub" style="margin-bottom:0">Оставьте контакты, и администратор подберёт время. Instagram: <a href="https://www.instagram.com/oga_dental_clinic/">@oga_dental_clinic</a></p></div>
   <form id="f" novalidate>
     <label>Имя<input id="n" autocomplete="name" required></label>
-    <label>Телефон<input id="p" type="tel" autocomplete="tel" required placeholder="+7"></label>
-    <label>Направление<select id="s"></select></label>
+    <label for="p">Телефон</label><div class="phf"><span class="cc">+996</span><input id="p" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="555 123 456" maxlength="11" aria-label="Номер телефона, Кыргызстан" required></div><small class="err" id="perr" hidden>Введите 9 цифр, например 555 123 456</small>
     <button class="btn">Отправить заявку</button>
   </form>
-  <div class="done" id="ok" role="status"><h3>Заявка принята</h3><p>Это демо: данные никуда не отправляются.</p></div>
+  <div class="done" id="ok" role="status"><h3>Заявка принята</h3><p>Перезвоним на <b id="okp"></b>. Это демо: данные никуда не отправляются.</p></div>
 </div></section>
 <footer><div class="wrap">Дизайн-концепция 2 из 3 · адрес и телефон добавим после согласования</div></footer>
 
@@ -193,8 +197,8 @@ const D=[["Терапия","Лечение кариеса и пульпита","
 ["Ортопедия","Коронки, виниры, мосты","Подбираем цвет и форму так, чтобы работа не отличалась от соседних зубов.",["Коронки","Виниры","Мостовидные протезы"]],
 ["Гигиена","Чистка и профилактика","Убираем налёт и камень, учим домашнему уходу.",["Профессиональная чистка","Консультация по уходу"]],
 ["Детям","Первый визит без страха","Знакомим с кабинетом как с игрой, родитель рядом.",["Осмотр","Лечение молочных зубов","Профилактика"]]];
-const tabs=document.getElementById('tabs'),panel=document.getElementById('panel'),sel=document.getElementById('s');
-D.forEach(([t],i)=>{tabs.insertAdjacentHTML('beforeend',`<button role="tab" data-i="${i}">${t}</button>`);sel.insertAdjacentHTML('beforeend',`<option>${t}</option>`)});
+const tabs=document.getElementById('tabs'),panel=document.getElementById('panel');
+D.forEach(([t],i)=>{tabs.insertAdjacentHTML('beforeend',`<button role="tab" data-i="${i}">${t}</button>`)});
 function tab(i){tabs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',i==j));const d=D[i];panel.innerHTML=`<div><h3>${d[1]}</h3><p>${d[2]}</p></div><ul>${d[3].map(x=>`<li>${x}</li>`).join('')}</ul>`}
 tabs.onclick=e=>{const b=e.target.closest('button');b&&tab(+b.dataset.i)};tab(0);
 
@@ -207,7 +211,10 @@ function show(i){lane.querySelectorAll('.node').forEach((n,j)=>{n.classList.togg
 lane.onclick=e=>{const n=e.target.closest('.node');n&&show(+n.dataset.i)};show(0);
 let tm;run.onclick=()=>{clearInterval(tm);let i=0;show(0);tm=setInterval(()=>{i++;if(i>5){clearInterval(tm);return}show(i)},1400)};
 
-f.onsubmit=e=>{e.preventDefault();if(!n.value.trim()||!p.value.trim()){(n.value.trim()?p:n).focus();return}f.style.display='none';ok.style.display='block'};
+function fmtPhone(el){el.addEventListener('input',()=>{const d=el.value.replace(/\D/g,'').slice(0,9);el.value=[d.slice(0,3),d.slice(3,6),d.slice(6,9)].filter(Boolean).join(' ');const pe=document.getElementById('perr');if(pe)pe.hidden=true})}
+const phOk=v=>v.replace(/\D/g,'').length==9;
+fmtPhone(p);
+f.onsubmit=e=>{e.preventDefault();perr.hidden=true;if(!n.value.trim()){n.focus();return}if(!phOk(p.value)){perr.hidden=false;p.focus();return}okp.textContent='+996 '+p.value;f.style.display='none';ok.style.display='block'};
 
 // team
 (()=>{
