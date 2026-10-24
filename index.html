@@ -24,7 +24,7 @@ iframe{flex:1;border:0;width:100%;background:#fff}
 </div>
 <iframe id="fr" title="Предпросмотр дизайна"></iframe>
 <script>
-const V=[["garden","1. Сад","спокойный"],["precision","2. Точность","технологичный"],["family","3. Семья","дружелюбный"]];
+const V=[["garden","1. Сад","спокойный"],["precision","2. Доверие","строгий и светлый"],["family","3. Забота","мягкий и тёплый"]];
 const tabs=document.getElementById('tabs'),fr=document.getElementById('fr');
 tabs.innerHTML=V.map(([k,t,s],i)=>`<button role="tab" data-i="${i}">${t}<small>${s}</small></button>`).join('');
 function open(i,push){tabs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',i==j));

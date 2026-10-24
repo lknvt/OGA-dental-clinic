@@ -3,28 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>OGA Dental Clinic — Вариант 3: Семья</title>
+<title>OGA Dental Clinic — Вариант 3: Забота</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--lime:#c8e55a;--lime2:#eaf6b8;--green:#0e5a36;--deep:#083d24;--pink:#ffb4a8;--sun:#ffd95a;--paper:#fffdf5;--ink:#143324}
+:root{--lime:#e6f2c6;--lime2:#eef6e2;--green:#12804a;--deep:#0c4a2f;--pink:#e9f3ef;--sun:#f3f8e4;--paper:#fcfdf9;--ink:#143324}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
 body{font:18px/1.55 Nunito,system-ui,sans-serif;font-weight:500;background:var(--paper);color:var(--ink)}
-h1,h2,h3{font-family:Comfortaa,sans-serif;font-weight:700;line-height:1.1}
+h1,h2,h3{font-family:Manrope,sans-serif;font-weight:700;line-height:1.1}
 :focus-visible{outline:4px solid var(--green);outline-offset:3px}
 .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
 header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
-.logo{font:700 26px Comfortaa;color:var(--green)}
-.btn{display:inline-block;border:0;cursor:pointer;font:800 17px Nunito;padding:15px 28px;border-radius:99px;background:var(--green);color:#fff;text-decoration:none;box-shadow:0 5px 0 var(--deep);transition:transform .12s,box-shadow .12s}
-.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 var(--deep)}
-.btn:active{transform:translateY(5px);box-shadow:0 0 0 var(--deep)}
-.btn.sun{background:var(--sun);color:var(--deep);box-shadow:0 5px 0 #c9a21d}
+.logo{font:700 26px Manrope;color:var(--green)}
+.btn{display:inline-block;border:0;cursor:pointer;font:800 17px Nunito;padding:15px 28px;border-radius:99px;background:var(--green);color:#fff;text-decoration:none;box-shadow:0 10px 22px -10px #12804acc;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.sun{background:#fff;color:var(--deep);box-shadow:inset 0 0 0 2px var(--deep)}
 
-.hero{background:var(--lime);border-radius:0 0 64px 64px;padding:20px 0 70px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(180deg,#e9f3d8,#f6faee);border-radius:0 0 64px 64px;padding:20px 0 70px;position:relative;overflow:hidden}
 .hero .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}
 .hero h1{font-size:clamp(40px,6vw,76px);color:var(--deep)}
-.hero p{margin:18px 0 28px;font-size:20px;max-width:26em;color:#25502f}
+.hero p{margin:18px 0 28px;font-size:20px;max-width:26em;color:#3b5a46}
 .blob{position:relative;aspect-ratio:1;max-width:420px;margin:0 auto;width:100%}
 .blob svg{width:100%;height:100%;overflow:visible}
 #mouth{cursor:pointer}
@@ -40,44 +39,44 @@ section h2{font-size:clamp(30px,4.2vw,50px);color:var(--green);margin-bottom:12p
 .sub{max-width:34em;margin-bottom:34px;color:#40604d}
 
 /* brush timer */
-.game{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;background:var(--lime2);border-radius:44px;padding:36px}
+.game{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;background:var(--lime2);border:1px solid #d6e5c2;border-radius:44px;padding:36px}
 .dial{position:relative;width:240px;height:240px}
 .dial svg{width:100%;height:100%;transform:rotate(-90deg)}
-.dial .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font:700 44px Comfortaa;color:var(--deep)}
+.dial .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font:700 44px Manrope;color:var(--deep)}
 .dial .t small{display:block;font:800 14px Nunito;color:#40604d}
 .game .zones{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}
 .zone{padding:9px 16px;border-radius:99px;background:#fff;font-weight:800;font-size:15px;transition:.25s}
 .zone.on{background:var(--green);color:#fff;transform:scale(1.08)}
-.zone.past{background:var(--lime);}
+.zone.past{background:#cfe6b0}
 
 /* quiz */
-.quiz{background:var(--deep);color:#fff;border-radius:44px;padding:44px}
-.quiz h2{color:#fff}
+.quiz{background:var(--lime2);border:1px solid #d6e5c2;color:var(--ink);border-radius:44px;padding:44px}
+.quiz h2{color:var(--green)}
 .q h3{font-size:26px;margin-bottom:18px}
 .opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.opts button{all:unset;box-sizing:border-box;cursor:pointer;padding:18px 20px;border-radius:20px;background:#ffffff14;border:2px solid #ffffff33;font-weight:800;transition:.15s}
-.opts button:hover{background:var(--lime);color:var(--deep);border-color:var(--lime);transform:translateY(-3px)}
-.opts button:focus-visible{outline:4px solid var(--sun)}
+.opts button{all:unset;box-sizing:border-box;cursor:pointer;padding:18px 20px;border-radius:20px;background:#fff;border:2px solid #d6e5c2;font-weight:800;transition:.15s}
+.opts button:hover{background:var(--green);color:#fff;border-color:var(--green);transform:translateY(-3px)}
+.opts button:focus-visible{outline:4px solid var(--green)}
 .prog{display:flex;gap:6px;margin-bottom:22px}
-.prog i{flex:1;height:8px;border-radius:9px;background:#ffffff33}
-.prog i.on{background:var(--sun)}
-.res{background:#fff;color:var(--ink);border-radius:28px;padding:28px}
+.prog i{flex:1;height:8px;border-radius:9px;background:#d6e5c2}
+.prog i.on{background:var(--green)}
+.res{background:#fff;border:1px solid #d6e5c2;color:var(--ink);border-radius:28px;padding:28px}
 .res h3{font-size:30px;color:var(--green);margin-bottom:8px}
 .res .btn{margin:16px 12px 0 0}
 .link{all:unset;cursor:pointer;text-decoration:underline;font-weight:800}
 
 /* faq/kids */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card{border-radius:32px;padding:28px;min-height:220px}
-.card:nth-child(1){background:var(--pink)}.card:nth-child(2){background:var(--sun)}.card:nth-child(3){background:var(--lime)}
-.card h3{font-size:24px;margin-bottom:8px;color:var(--deep)}
-.card:nth-child(odd){transform:rotate(-1.200deg)}.card:nth-child(even){transform:rotate(1deg)}
+.card{border-radius:28px;padding:28px;min-height:200px;background:#fff;border:1px solid #d6e5c2;box-shadow:0 20px 40px -30px #0c4a2f66}
 
-form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;background:#fff;border:3px solid var(--green);border-radius:32px;padding:24px}
+.card h3{font-size:24px;margin-bottom:8px;color:var(--deep)}
+
+
+form{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;background:#fff;border:1px solid #d6e5c2;box-shadow:0 20px 40px -30px #0c4a2f66;border-radius:32px;padding:24px}
 form label{font-weight:800;font-size:14px}
 form input{width:100%;margin-top:6px;padding:14px 16px;border-radius:16px;border:2px solid #cfe1b0;font:inherit;background:var(--paper)}
 form input:focus{outline:0;border-color:var(--green)}
-.thanks{display:none;background:var(--sun);border-radius:32px;padding:32px;font:700 26px Comfortaa;color:var(--deep)}
+.thanks{display:none;background:var(--lime2);border-radius:32px;padding:32px;font:700 26px Manrope;color:var(--deep)}
 footer{padding:30px 0 50px;text-align:center;color:#40604d;font-size:15px}
 @media(max-width:860px){.hero .grid,.game,.cards,form{grid-template-columns:1fr}.dial{margin:0 auto}.quiz,.game{padding:26px;border-radius:32px}.card{transform:none!important}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -89,8 +88,8 @@ footer{padding:30px 0 50px;text-align:center;color:#40604d;font-size:15px}
   <header><span class="logo">OGA <span style="font-size:13px;letter-spacing:.1em">dental clinic</span></span><a class="btn sun" href="#book">Записаться</a></header>
   <div class="grid">
    <div>
-    <h1>Стоматолог, к которому ходят с улыбкой</h1>
-    <p>Лечим взрослых и детей. Первый визит у малышей проходит как знакомство, а не как процедура.</p>
+    <h1>Лечим бережно, объясняем понятно</h1>
+    <p>Стоматология для взрослых и детей. Первый визит начинается с осмотра и спокойного разговора.</p>
     <a class="btn" href="#quiz">Подобрать услугу за 3 вопроса</a>
    </div>
    <div class="blob" id="blob">
@@ -100,7 +99,7 @@ footer{padding:30px 0 50px;text-align:center;color:#40604d;font-size:15px}
      <circle cx="156" cy="146" r="4" fill="#fff"/><circle cx="252" cy="146" r="4" fill="#fff"/>
      <ellipse cx="124" cy="190" rx="18" ry="11" fill="#ffb4a8"/><ellipse cx="276" cy="190" rx="18" ry="11" fill="#ffb4a8"/>
      <path id="smileLine" d="M168 200q32 30 64 0" fill="none" stroke="#143324" stroke-width="8" stroke-linecap="round"/>
-     <g class="sparkle" fill="#ffd95a"><path d="M95 80l6 14 14 6-14 6-6 14-6-14-14-6 14-6z"/><path d="M310 60l5 11 11 5-11 5-5 11-5-11-11-5 11-5z"/><path d="M300 270l5 11 11 5-11 5-5 11-5-11-11-5 11-5z"/></g>
+     <g class="sparkle" fill="#8db53a"><path d="M95 80l6 14 14 6-14 6-6 14-6-14-14-6 14-6z"/><path d="M310 60l5 11 11 5-11 5-5 11-5-11-11-5 11-5z"/><path d="M300 270l5 11 11 5-11 5-5 11-5-11-11-5 11-5z"/></g>
     </svg>
     <div class="say" id="say" aria-live="polite">Нажми на меня</div>
    </div>
