@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OGA Dental Clinic — Вариант 2: Точность</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06231a;--bg2:#0b3224;--line:#1d4a39;--lime:#b6e03c;--white:#f4faf0;--dim:#93b3a2}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:17px/1.55 'Golos Text',system-ui,sans-serif;background:var(--bg);color:var(--white)}
+h1,h2,h3{font-family:Unbounded,sans-serif;font-weight:800;line-height:1.05}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.bar b{font:800 22px Unbounded}.bar b span{color:var(--lime)}
+.bar a.btn{padding:10px 20px}
+.btn{display:inline-block;border:0;cursor:pointer;background:var(--lime);color:var(--bg);font:600 16px 'Golos Text';padding:15px 28px;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--white)}
+
+/* hero = tooth chart */
+.hero{display:grid;grid-template-columns:1fr 1.15fr;gap:30px;align-items:center;padding:44px 0 70px}
+.hero h1{font-size:clamp(36px,5.2vw,68px);letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero p{margin:20px 0 28px;color:var(--dim);max-width:28em}
+.chart{background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:18px}
+.chart svg{width:100%;display:block}
+.tooth{cursor:pointer;fill:#e9f2e3;stroke:var(--bg);stroke-width:2;transition:fill .15s,transform .15s;transform-box:fill-box;transform-origin:center}
+.tooth:hover{fill:#fff;transform:scale(1.12)}
+.tooth.on{fill:var(--lime);transform:scale(1.18)}
+.tooth:focus-visible{outline:none;stroke:var(--lime);stroke-width:4}
+.readout{margin-top:6px;padding:16px 18px;border-radius:14px;background:var(--bg);border:1px solid var(--line);min-height:112px}
+.readout h3{font-size:19px;margin-bottom:6px}
+.readout p{color:var(--dim);font-size:15px}
+.readout a{color:var(--lime);font-weight:600}
+.hint{font-size:13px;color:var(--dim);text-align:center;margin-bottom:4px}
+
+section{padding:76px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(28px,3.8vw,46px);letter-spacing:-.02em;max-width:14em}
+section>.wrap>p.sub{color:var(--dim);margin:12px 0 36px;max-width:36em}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.tabs button{all:unset;cursor:pointer;padding:10px 18px;border-radius:99px;border:1px solid var(--line);font-weight:500}
+.tabs button[aria-selected=true]{background:var(--lime);color:var(--bg);border-color:var(--lime)}
+.tabs button:focus-visible{outline:3px solid var(--lime)}
+.panel{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:34px}
+.panel h3{font-size:28px;margin-bottom:12px}
+.panel p{color:var(--dim)}
+.panel ul{list-style:none;padding:0;display:grid;gap:10px;align-content:start}
+.panel li{padding:12px 16px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.panel li:before{content:"+ ";color:var(--lime);font-weight:700}
+
+/* sterilization */
+.lane{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0 28px}
+.lane:before{content:"";position:absolute;left:8%;right:8%;top:26px;height:2px;background:var(--line)}
+.lane .fill{position:absolute;left:8%;top:26px;height:2px;background:var(--lime);width:0;transition:width .6s}
+.node{position:relative;text-align:center;font-size:14px;color:var(--dim)}
+.node i{display:block;width:52px;height:52px;margin:0 auto 10px;border-radius:14px;background:var(--bg);border:2px solid var(--line);display:grid;place-items:center;font:800 16px Unbounded;font-style:normal;transition:.3s}
+.node.on{color:var(--white)}
+.node.on i{background:var(--lime);border-color:var(--lime);color:var(--bg);transform:rotate(-6deg) scale(1.08)}
+.node.past i{border-color:var(--lime);color:var(--lime)}
+.runrow{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.runrow p{color:var(--dim);min-height:3.2em;max-width:34em}
+.btn.alt{background:transparent;color:var(--lime);box-shadow:inset 0 0 0 2px var(--lime)}
+
+/* appointment */
+.cta{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+form{display:grid;gap:14px}
+form label{font-size:14px;color:var(--dim)}
+form input,form select{width:100%;margin-top:6px;padding:15px 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--white);font:inherit}
+form input:focus,form select:focus{outline:0;border-color:var(--lime)}
+.done{display:none;padding:26px;border:1px dashed var(--lime);border-radius:16px}
+.done h3{color:var(--lime);margin-bottom:6px}
+footer{padding:30px 0;color:var(--dim);font-size:14px;border-top:1px solid var(--line)}
+
+@media(max-width:860px){.hero,.panel,.cta{grid-template-columns:1fr}.lane{grid-template-columns:1fr;gap:12px}.lane:before,.lane .fill{display:none}.node{display:flex;gap:14px;align-items:center;text-align:left}.node i{margin:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar"><b>OGA<span>.</span>dental</b><a class="btn" href="#book">Записаться</a></div>
+
+<div class="hero">
+  <div>
+    <h1>Покажите, где болит. <em>Мы скажем, что делать</em></h1>
+    <p>Нажмите на зуб на схеме. Мы объясним, чем обычно лечат этот тип зубов, и подскажем, как записаться.</p>
+    <a class="btn" href="#book">Записаться на осмотр</a>
+  </div>
+  <div class="chart">
+    <p class="hint">Верхняя челюсть сверху, нижняя снизу</p>
+    <svg id="chart" viewBox="0 0 520 380" role="group" aria-label="Схема зубов"></svg>
+    <div class="readout" id="read" aria-live="polite"><h3>Выберите зуб</h3><p>Можно нажимать мышью или переходить клавишей Tab.</p></div>
+  </div>
+</div>
+</div>
+
+<section><div class="wrap">
+  <h2>Направления клиники</h2>
+  <p class="sub">Каждое направление ведёт один врач, поэтому план лечения не теряется между кабинетами.</p>
+  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="panel" id="panel" role="tabpanel"></div>
+</div></section>
+
+<section id="safety"><div class="wrap">
+  <h2>Путь инструмента от кабинета до вашего рта</h2>
+  <p class="sub">Запустите анимацию или нажмите на любой шаг.</p>
+  <div class="lane" id="lane"><div class="fill" id="fill"></div></div>
+  <div class="runrow"><button class="btn alt" id="run">Запустить</button><p id="stxt" aria-live="polite"></p></div>
+</div></section>
+
+<section id="book"><div class="wrap cta">
+  <div><h2>Первый визит: осмотр и план лечения</h2><p class="sub" style="margin-bottom:0">Оставьте контакты, и администратор подберёт время. Instagram: <a href="https://www.instagram.com/oga_dental_clinic/">@oga_dental_clinic</a></p></div>
+  <form id="f" novalidate>
+    <label>Имя<input id="n" autocomplete="name" required></label>
+    <label>Телефон<input id="p" type="tel" autocomplete="tel" required placeholder="+7"></label>
+    <label>Направление<select id="s"></select></label>
+    <button class="btn">Отправить заявку</button>
+  </form>
+  <div class="done" id="ok" role="status"><h3>Заявка принята</h3><p>Это демо: данные никуда не отправляются.</p></div>
+</div></section>
+<footer><div class="wrap">Дизайн-концепция 2 из 3 · адрес и телефон добавим после согласования</div></footer>
+
+<script>
+const kinds={
+ molar:["Моляр (жевательный)","Здесь чаще всего кариес в бороздках и нужна пломба или коронка. Если зуба нет, ставят имплант.","Лечение","Импланты"],
+ pre:["Премоляр","Часто нуждается в реставрации или коронке после сколов. Лечим с сохранением максимума ткани.","Протезирование","Лечение"],
+ canine:["Клык","Опора всей улыбки. Прочный зуб: при потере восстанавливаем имплантом или коронкой.","Протезирование","Импланты"],
+ incisor:["Резец (передний)","Самые заметные зубы: сколы, цвет, форма. Подбираем виниры или реставрацию под соседние зубы.","Эстетика","Протезирование"]};
+const ch=document.getElementById('chart'),rd=document.getElementById('read');
+// FDI numbering: arch of 16
+function arch(upper){const cx=260,cy=upper?190:190,rx=215,ry=150;let out='';
+ for(let i=0;i<16;i++){const t=Math.PI*(0.04+0.92*i/15);const x=cx-Math.cos(t)*rx*(1),y=upper?cy-Math.sin(t)*ry:cy+Math.sin(t)*ry;
+  const d=Math.abs(i-7.5);const type=d<2?'incisor':d<3?'canine':d<5?'pre':'molar';
+  const w={incisor:20,canine:22,pre:24,molar:32}[type],h={incisor:30,canine:30,pre:26,molar:28}[type];
+  const q=i<8?(upper?1:4):(upper?2:3),pos=i<8?8-i:i-7,num=q*10+pos;
+  const rot=(Math.atan2(y-cy,x-cx)*180/Math.PI)+90;
+  out+=`<g transform="translate(${x} ${y}) rotate(${rot})"><rect class="tooth" tabindex="0" role="button" aria-label="Зуб ${num}, ${kinds[type][0]}" data-n="${num}" data-k="${type}" x="${-w/2}" y="${-h/2}" width="${w}" height="${h}" rx="${type=='molar'?7:10}"/></g>`}
+ return out}
+ch.innerHTML=arch(true)+arch(false);
+function pick(el){ch.querySelectorAll('.on').forEach(e=>e.classList.remove('on'));el.classList.add('on');
+ const k=kinds[el.dataset.k];rd.innerHTML=`<h3>Зуб ${el.dataset.n} · ${k[0]}</h3><p>${k[1]} Обычно это направления «${k[2]}» и «${k[3]}». <a href="#book">Записаться</a></p>`}
+ch.addEventListener('click',e=>e.target.classList.contains('tooth')&&pick(e.target));
+ch.addEventListener('keydown',e=>{if((e.key=='Enter'||e.key==' ')&&e.target.classList.contains('tooth')){e.preventDefault();pick(e.target)}});
+
+// tabs
+const D=[["Терапия","Лечение кариеса и пульпита","Бережно убираем поражённые ткани и восстанавливаем форму зуба.",["Лечение кариеса","Лечение каналов","Реставрация"]],
+["Имплантация","Новый зуб на искусственном корне","Показываем план заранее: снимок, этапы, сроки, итоговую коронку.",["Консультация и снимок","Установка импланта","Коронка на импланте"]],
+["Ортопедия","Коронки, виниры, мосты","Подбираем цвет и форму так, чтобы работа не отличалась от соседних зубов.",["Коронки","Виниры","Мостовидные протезы"]],
+["Гигиена","Чистка и профилактика","Убираем налёт и камень, учим домашнему уходу.",["Профессиональная чистка","Консультация по уходу"]],
+["Детям","Первый визит без страха","Знакомим с кабинетом как с игрой, родитель рядом.",["Осмотр","Лечение молочных зубов","Профилактика"]]];
+const tabs=document.getElementById('tabs'),panel=document.getElementById('panel'),sel=document.getElementById('s');
+D.forEach(([t],i)=>{tabs.insertAdjacentHTML('beforeend',`<button role="tab" data-i="${i}">${t}</button>`);sel.insertAdjacentHTML('beforeend',`<option>${t}</option>`)});
+function tab(i){tabs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',i==j));const d=D[i];panel.innerHTML=`<div><h3>${d[1]}</h3><p>${d[2]}</p></div><ul>${d[3].map(x=>`<li>${x}</li>`).join('')}</ul>`}
+tabs.onclick=e=>{const b=e.target.closest('button');b&&tab(+b.dataset.i)};tab(0);
+
+// sterilization
+const SS=[["Дезинфекция","Инструменты сразу после приёма уходят в дезинфицирующий раствор."],["Очистка","Ультразвуковая ванна убирает остатки, которые не видно глазом."],["Сушка","Инструменты высушивают перед упаковкой."],["Упаковка","Каждый набор запаивают в отдельный пакет с индикатором."],["Автоклав","Паровая стерилизация под давлением. Индикатор показывает, что режим пройден."],["При вас","Пакет вскрывают в кабинете у вас на глазах."]];
+const lane=document.getElementById('lane'),fill=document.getElementById('fill'),stxt=document.getElementById('stxt');
+SS.forEach(([t],i)=>lane.insertAdjacentHTML('beforeend',`<button class="node" style="all:unset;display:block;cursor:pointer;position:relative;text-align:center;font-size:14px" data-i="${i}"><i>${i+1}</i>${t}</button>`));
+lane.querySelectorAll('.node').forEach(n=>n.classList.add('node'));
+function show(i){lane.querySelectorAll('.node').forEach((n,j)=>{n.classList.toggle('on',j==i);n.classList.toggle('past',j<i);n.style.color=j<=i?'var(--white)':'var(--dim)'});fill.style.width=(i/5)*84+'%';stxt.textContent=SS[i][0]+'. '+SS[i][1]}
+lane.onclick=e=>{const n=e.target.closest('.node');n&&show(+n.dataset.i)};show(0);
+let tm;run.onclick=()=>{clearInterval(tm);let i=0;show(0);tm=setInterval(()=>{i++;if(i>5){clearInterval(tm);return}show(i)},1400)};
+
+f.onsubmit=e=>{e.preventDefault();if(!n.value.trim()||!p.value.trim()){(n.value.trim()?p:n).focus();return}f.style.display='none';ok.style.display='block'};
+</script>
+</body>
+</html>

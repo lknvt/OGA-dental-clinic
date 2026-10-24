@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OGA Dental Clinic — Вариант 1: Сад</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f5f8ef; --mist:#e2ebd3; --leaf:#8db53a; --forest:#0c4a2f; --ink:#13261b; --muted:#566a5c;
+  --tooth:#fbfaf3; --r:28px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:17px/1.6 Onest,system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.02;letter-spacing:-.01em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--leaf);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* nav */
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:26px;color:var(--forest)}
+.logo small{display:block;font:600 10px/1 Onest;letter-spacing:.14em;color:var(--leaf)}
+nav a{margin-left:26px;text-decoration:none;font-weight:500;font-size:15px;color:var(--muted)}
+nav a:hover{color:var(--forest)}
+.btn{display:inline-block;border:0;cursor:pointer;font:600 16px Onest;padding:14px 26px;border-radius:99px;background:var(--forest);color:#fff;text-decoration:none;transition:transform .2s,background .2s}
+.btn:hover{background:#0a3a25;transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--forest);box-shadow:inset 0 0 0 2px var(--forest)}
+.btn.ghost:hover{background:var(--forest);color:#fff}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:56px 0 80px}
+.hero h1{font-size:clamp(46px,7vw,92px);color:var(--forest)}
+.hero p.lead{margin:22px 0 30px;max-width:30em;color:var(--muted);font-size:19px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.stage{background:var(--mist);border-radius:var(--r) var(--r) 180px var(--r);padding:28px 28px 24px;position:relative;overflow:hidden}
+.stage svg{width:100%;display:block}
+.stage .leafbg{position:absolute;right:-60px;top:-60px;width:220px;opacity:.5}
+.shade{margin-top:8px;background:var(--paper);border-radius:20px;padding:16px 20px}
+.shade label{display:flex;justify-content:space-between;font-weight:600;font-size:15px}
+.shade output{color:var(--forest)}
+input[type=range]{width:100%;margin:12px 0 4px;accent-color:var(--forest);height:28px}
+.shade small{color:var(--muted);font-size:13px}
+
+/* section */
+section{padding:84px 0}
+.head{max-width:620px;margin-bottom:40px}
+.head h2{font-size:clamp(38px,5vw,60px);color:var(--forest)}
+.head p{margin-top:14px;color:var(--muted)}
+
+/* services accordion */
+.services{background:var(--forest);color:#fff;border-radius:48px;margin:0 12px}
+.services .head h2{color:#fff}.services .head p{color:#bcd3c2}
+.acc{display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;align-items:start}
+.item{border-top:1px solid #ffffff33}
+.item button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;align-items:center;padding:22px 4px;font:600 31px 'Cormorant Garamond',serif}
+.item button:focus-visible{outline:3px solid var(--leaf)}
+.item .plus{width:30px;height:30px;border-radius:50%;background:var(--leaf);position:relative;flex:none;transition:transform .35s}
+.item .plus:before,.item .plus:after{content:"";position:absolute;left:8px;right:8px;top:14px;height:2px;background:var(--forest)}
+.item .plus:after{transform:rotate(90deg)}
+.item[data-open=true] .plus{transform:rotate(45deg)}
+.item .body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s}
+.item[data-open=true] .body{grid-template-rows:1fr}
+.item .body>div{overflow:hidden}
+.item .body p{padding:0 4px 24px;color:#cfe0d3;max-width:32em}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.steps:before{content:"";position:absolute;left:5%;right:5%;top:27px;height:3px;background:var(--mist)}
+.steps .bar{position:absolute;left:5%;top:27px;height:3px;background:var(--leaf);width:0;transition:width .5s}
+.step{all:unset;cursor:pointer;text-align:center;position:relative;padding:0 8px}
+.step i{display:grid;place-items:center;width:56px;height:56px;margin:0 auto 12px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 3px var(--mist);font:700 22px 'Cormorant Garamond';font-style:normal;color:var(--muted);transition:.3s}
+.step[aria-selected=true] i,.step.done i{background:var(--leaf);box-shadow:none;color:var(--forest)}
+.step b{display:block;font-size:15px}
+.step:focus-visible i{outline:3px solid var(--forest)}
+.stepinfo{margin-top:34px;background:var(--mist);border-radius:var(--r);padding:28px 32px;max-width:720px;min-height:120px}
+.stepinfo h3{font-size:32px;color:var(--forest);margin-bottom:6px}
+
+/* booking */
+.book{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+form{background:#fff;border-radius:var(--r);padding:30px;box-shadow:0 20px 50px -30px #0c4a2f66}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 20px;border:0;padding:0}
+.chips input{position:absolute;opacity:0}
+.chips label{padding:9px 16px;border-radius:99px;background:var(--mist);cursor:pointer;font-size:15px;font-weight:500;transition:.2s}
+.chips input:checked+label{background:var(--forest);color:#fff}
+.chips input:focus-visible+label{outline:3px solid var(--leaf)}
+form legend,form .lbl{font-weight:600;font-size:14px;color:var(--muted)}
+.f{display:block;width:100%;margin:6px 0 18px;padding:14px 16px;border:2px solid var(--mist);border-radius:14px;font:inherit;background:var(--paper)}
+.f:focus{border-color:var(--forest);outline:0}
+.ok{display:none;text-align:center;padding:30px 10px}
+.ok h3{font-size:38px;color:var(--forest)}
+form.sent .fields{display:none}form.sent .ok{display:block}
+.contacts p{margin:8px 0;color:var(--muted)}
+.contacts b{color:var(--ink)}
+footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
+
+@media(max-width:860px){
+  nav a:not(.btn){display:none}
+  .hero,.book,.acc{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;gap:6px}.steps:before,.steps .bar{display:none}
+  .step{display:flex;gap:14px;align-items:center;text-align:left}.step i{margin:0}
+  .services{border-radius:32px}
+  .item button{font-size:27px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.sway{transform-origin:50% 100%;animation:sway 7s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(3deg)}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="logo" href="#top" aria-label="OGA Dental Clinic">
+    <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c-5-3-10 1-9 7 .6 4 3 5 4 8 1 3 0 8 2 10 1.600 2 2 2 3 2s1.400 0 3-2c2-2 1-7 2-10 1-3 3.400-4 4-8 1-6-4-10-9-7z" fill="none" stroke="#8db53a" stroke-width="2.200"/><path d="M3 24c8 0 13 3 17 9 4-6 9-9 17-9-6 8-12 11-17 11S9 32 3 24z" fill="#8db53a"/></svg>
+    <span>OGA<small>DENTAL CLINIC</small></span></a>
+  <nav><a href="#services">Услуги</a><a href="#safety">Стерилизация</a><a href="#book">Контакты</a><a class="btn" href="#book" style="color:#fff;margin-left:26px;padding:10px 20px">Записаться</a></nav>
+</div></header>
+
+<main id="top">
+<div class="wrap hero">
+  <div>
+    <h1>Здоровая улыбка растёт как сад</h1>
+    <p class="lead">Лечим, протезируем и ставим импланты без спешки. Каждый инструмент проходит стерилизацию по шагам, а детям у нас спокойно.</p>
+    <div class="cta"><a class="btn" href="#book">Записаться на приём</a><a class="btn ghost" href="#safety">Как мы стерилизуем</a></div>
+  </div>
+  <div class="stage">
+    <svg class="leafbg sway" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 90C10 40 40 10 90 10c0 50-30 80-80 80z" fill="#8db53a"/></svg>
+    <svg id="smile" viewBox="0 0 400 220" role="img" aria-label="Улыбка: пример оттенка эмали">
+      <path d="M20 70C90 20 310 20 380 70c-20 90-90 140-180 140S40 160 20 70z" fill="#c76e73"/>
+      <g id="teeth"></g>
+      <path d="M20 70C90 20 310 20 380 70" fill="none" stroke="#a4545b" stroke-width="10" stroke-linecap="round"/>
+    </svg>
+    <div class="shade">
+      <label for="sh">Оттенок эмали <output id="shout">A2</output></label>
+      <input id="sh" type="range" min="0" max="4" step="1" value="2">
+      <small>Подвигайте ползунок: так мы согласуем желаемый цвет до начала работы.</small>
+    </div>
+  </div>
+</div>
+
+<section id="services" class="services"><div class="wrap">
+  <div class="head"><h2>Что мы лечим</h2><p>Откройте направление, чтобы увидеть, с чем к нам приходят чаще всего.</p></div>
+  <div class="acc" id="acc"></div>
+</div></section>
+
+<section id="safety"><div class="wrap">
+  <div class="head"><h2>Пошаговая стерилизация</h2><p>Нажимайте на шаги: так инструмент проходит путь от кабинета до вашего рта.</p></div>
+  <div class="steps" role="tablist" id="steps"><div class="bar" id="bar"></div></div>
+  <div class="stepinfo" id="stepinfo" aria-live="polite"></div>
+</div></section>
+
+<section id="book"><div class="wrap book">
+  <div class="contacts">
+    <div class="head" style="margin-bottom:20px"><h2>Запишитесь на осмотр</h2><p>Оставьте контакт, и администратор перезвонит, чтобы подобрать время.</p></div>
+    <p><b>Instagram:</b> <a href="https://www.instagram.com/oga_dental_clinic/">@oga_dental_clinic</a></p>
+    <p><b>Адрес:</b> <span>добавим из раздела «АДРЕС» в Instagram</span></p>
+    <p><b>Телефон:</b> <span>добавим номер клиники</span></p>
+  </div>
+  <form id="form" novalidate>
+    <div class="fields">
+      <fieldset class="chips"><legend>Что беспокоит</legend>
+        <script>document.write(["Осмотр","Болит зуб","Имплантация","Коронки","Гигиена","Ребёнку"].map((t,i)=>`<input type="radio" name="t" id="c${i}" ${i?'':'checked'}><label for="c${i}">${t}</label>`).join(''))</script>
+      </fieldset>
+      <label class="lbl" for="n">Имя</label><input class="f" id="n" required autocomplete="name">
+      <label class="lbl" for="p">Телефон</label><input class="f" id="p" type="tel" required autocomplete="tel" placeholder="+7">
+      <button class="btn" style="width:100%">Отправить заявку</button>
+    </div>
+    <div class="ok" role="status"><h3>Спасибо, <span id="who"></span>!</h3><p>Это демо-форма: заявка никуда не уходит.</p></div>
+  </form>
+</div></section>
+</main>
+<footer>© OGA Dental Clinic · Дизайн-концепция 1 из 3 · тексты и контакты — для согласования</footer>
+
+<script>
+// teeth
+const shades=[["#ffffff","A1"],["#fcfbf2","A1.5"],["#f6f1dc","A2"],["#eee3c0","A3"],["#e2d19c","A3.5"]];
+const T=document.getElementById('teeth');
+const xs=[60,100,142,178,222,258,300,340];
+T.innerHTML=xs.map((x,i)=>{const c=i==3||i==4?1.15:1;const w=(i==3||i==4?36:i==2||i==5?30:26),h=(i==3||i==4?62:54);const y=62+Math.abs(i-3.5)*7;return `<rect class="th" x="${x-w/2}" y="${y}" width="${w}" height="${h}" rx="${w/2.4}" stroke="#d8d0b4" stroke-width="1.500"/>`}).join('');
+const sh=document.getElementById('sh');
+function setShade(){const [c,n]=shades[sh.value];document.querySelectorAll('.th').forEach(t=>t.setAttribute('fill',c));shout.textContent=n}
+sh.oninput=setShade;setShade();
+
+// services
+const S=[["Лечение зубов","Кариес, пульпит, реставрации. Лечим аккуратно, с комфортным обезболиванием."],
+["Имплантация","Возвращаем зуб целиком: от консультации и снимка до коронки. Заранее показываем план и этапы."],
+["Протезирование","Коронки, виниры и мосты, подобранные по цвету и форме к вашим соседним зубам."],
+["Хирургия","Удаление, в том числе зубов мудрости, и подготовка дёсен к протезированию."],
+["Гигиена","Профессиональная чистка и советы по уходу, чтобы результат держался дольше."],
+["Детская стоматология","Знакомим ребёнка с кабинетом как с игрой. Родитель всегда рядом."]];
+acc.innerHTML=S.map(([t,d],i)=>`<div class="item" data-open="${i==0}"><button aria-expanded="${i==0}" aria-controls="b${i}">${t}<span class="plus"></span></button><div class="body" id="b${i}"><div><p>${d}</p></div></div></div>`).join('');
+acc.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const it=b.parentElement,o=it.dataset.open!=="true";it.dataset.open=o;b.setAttribute('aria-expanded',o)});
+
+// steps
+const P=[["Дезинфекция","Сразу после приёма инструменты погружаются в дезинфицирующий раствор, чтобы убрать биологические остатки."],
+["Очистка","Ручная и ультразвуковая очистка снимает налёт, который не видно глазом."],
+["Упаковка","Чистые инструменты запаиваются в индивидуальные крафт-пакеты с индикатором."],
+["Автоклав","Пакеты проходят паровую стерилизацию под давлением. Индикатор меняет цвет, когда режим достигнут."],
+["Открытие при вас","Пакет вскрывают в кабинете на ваших глазах. Вы видите, что инструмент стерилен."]];
+const st=document.getElementById('steps');
+P.forEach(([t],i)=>st.insertAdjacentHTML('beforeend',`<button class="step" role="tab" aria-selected="false" data-i="${i}"><i>${i+1}</i><b>${t}</b></button>`));
+function go(i){document.querySelectorAll('.step').forEach((s,j)=>{s.setAttribute('aria-selected',j==i);s.classList.toggle('done',j<i)});
+ bar.style.width=(i/(P.length-1))*90+'%';stepinfo.innerHTML=`<h3>${P[i][0]}</h3><p>${P[i][1]}</p>`}
+st.onclick=e=>{const s=e.target.closest('.step');if(s)go(+s.dataset.i)};go(0);
+
+// form
+form.onsubmit=e=>{e.preventDefault();if(!n.value.trim()||!p.value.trim()){(n.value.trim()?p:n).focus();return}who.textContent=n.value.trim();form.classList.add('sent')};
+</script>
+</body>
+</html>
