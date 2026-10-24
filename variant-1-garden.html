@@ -145,6 +145,29 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 .sway{transform-origin:50% 100%;animation:sway 7s ease-in-out infinite}
 @keyframes sway{50%{transform:rotate(3deg)}}
+
+/* team */
+.tmS{padding:80px 0}
+.tmH{font-size:clamp(34px,4.6vw,56px);color:var(--forest);margin-bottom:12px;font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.02}
+.tmSub{max-width:34em;color:var(--muted);margin-bottom:28px}
+.tmF{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.tmF button{all:unset;cursor:pointer;padding:9px 18px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--mist);font-weight:500;font-size:15px;color:var(--ink);transition:.15s}
+.tmF button:hover{box-shadow:inset 0 0 0 1.5px var(--forest)}
+.tmF button[aria-pressed=true]{background:var(--forest);color:#fff;box-shadow:none}
+.tmF button:focus-visible{outline:3px solid var(--forest);outline-offset:3px}
+.tmG{display:grid;grid-template-columns:repeat(auto-fill,minmax(188px,1fr));gap:18px}
+.tmC{background:#fff;border:1px solid var(--mist);border-radius:28px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.tmC:hover{transform:translateY(-4px);box-shadow:0 22px 40px -28px #0b4a2d99}
+.tmC[hidden]{display:none}
+.tmP{aspect-ratio:4/4.4;background:var(--mist);display:grid;place-items:end center}
+.tmP svg{width:78%;display:block}
+.tmB{padding:18px 20px 22px;display:flex;flex-direction:column;gap:4px;flex:1}
+.tmB b{font-size:18px;color:var(--ink);font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700}
+.tmB span{color:var(--muted);font-size:15px}
+.tmB a,.tmB button{all:unset;cursor:pointer;margin-top:auto;padding-top:14px;font-weight:600;color:var(--forest);font-size:15px}
+.tmB a:hover,.tmB button:hover{text-decoration:underline}
+.tmB a:focus-visible,.tmB button:focus-visible{outline:3px solid var(--forest);outline-offset:3px}
+.tmNote{margin-top:22px;font-size:14px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -152,7 +175,7 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
   <a class="logo" href="#top" aria-label="OGA Dental Clinic">
     <svg width="58" height="58" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c-5-3-10 1-9 7 .6 4 3 5 4 8 1 3 0 8 2 10 1.600 2 2 2 3 2s1.400 0 3-2c2-2 1-7 2-10 1-3 3.400-4 4-8 1-6-4-10-9-7z" fill="none" stroke="#8db53a" stroke-width="2.200"/><path d="M3 24c8 0 13 3 17 9 4-6 9-9 17-9-6 8-12 11-17 11S9 32 3 24z" fill="#8db53a"/></svg>
     <span>OGA<small>DENTAL CLINIC</small></span></a>
-  <nav><a href="#services">Услуги</a><a href="#safety">Стерилизация</a><a href="#book">Контакты</a><a class="btn" href="#book" style="color:#fff;margin-left:26px;padding:10px 20px">Записаться</a></nav>
+  <nav><a href="#services">Услуги</a><a href="#team">Специалисты</a><a href="#safety">Стерилизация</a><a href="#book">Контакты</a><a class="btn" href="#book" style="color:#fff;margin-left:26px;padding:10px 20px">Записаться</a></nav>
 </div></header>
 
 <main id="top">
@@ -231,6 +254,14 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
 <section id="services" class="services"><div class="wrap">
   <div class="head"><h2>Что мы лечим</h2><p>Откройте направление, чтобы увидеть, с чем к нам приходят чаще всего.</p></div>
   <div class="acc" id="acc"></div>
+</div></section>
+
+<section id="team" class="tmS"><div class="wrap">
+  <h2 class="tmH">Наши специалисты</h2>
+  <p class="tmSub">Выберите направление, чтобы увидеть, какой врач им занимается.</p>
+  <div class="tmF" id="tmF" role="group" aria-label="Направление"></div>
+  <div class="tmG" id="tmG"></div>
+  <p class="tmNote">Имена, фото и стаж врачей добавим после согласования: сейчас здесь макеты карточек.</p>
 </div></section>
 
 <section id="safety"><div class="wrap">
@@ -316,6 +347,17 @@ st.onclick=e=>{const s=e.target.closest('.step');if(s)go(+s.dataset.i)};go(0);
 
 // form
 form.onsubmit=e=>{e.preventDefault();if(!n.value.trim()||!p.value.trim()){(n.value.trim()?p:n).focus();return}who.textContent=n.value.trim();form.classList.add('sent')};
+
+// team
+(()=>{
+const T=[["Имя Фамилия","Стоматолог-терапевт","lech",0],["Имя Фамилия","Хирург-имплантолог","impl",1],["Имя Фамилия","Стоматолог-ортопед","prot",0],["Имя Фамилия","Детский стоматолог","kids",0],["Имя Фамилия","Гигиенист","lech",0]];
+const F=[["all","Все"],["lech","Лечение"],["impl","Имплантация"],["prot","Протезирование"],["kids","Детям"]];
+const av='<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="44" r="19" fill="#c9b79a"/><path d="M14 120c2-30 20-46 46-46s44 16 46 46z" fill="#fff"/><path d="M46 76l14 22 14-22" fill="none" stroke="#c9b79a" stroke-width="3"/><path d="M60 98v22" stroke="#c9b79a" stroke-width="3"/></svg>';
+const G=document.getElementById('tmG'),Fb=document.getElementById('tmF');
+G.innerHTML=T.map(([n,r,k,s])=>`<article class="tmC" data-k="${k}"><div class="tmP">${av}</div><div class="tmB"><b>${n}</b><span>${r}</span><a href="#book">Записаться</a></div></article>`).join('');
+Fb.innerHTML=F.map(([k,t],i)=>`<button aria-pressed="${i==0}" data-k="${k}">${t}</button>`).join('');
+Fb.onclick=e=>{const b=e.target.closest('button');if(!b)return;Fb.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x==b));G.querySelectorAll('.tmC').forEach(c=>c.hidden=b.dataset.k!='all'&&c.dataset.k!=b.dataset.k)};
+})();
 </script>
 </body>
 </html>
