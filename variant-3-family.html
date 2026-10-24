@@ -38,17 +38,21 @@ section.wrap{padding-top:76px;padding-bottom:76px}
 section h2{font-size:clamp(30px,4.2vw,50px);color:var(--green);margin-bottom:12px}
 .sub{max-width:34em;margin-bottom:34px;color:#40604d}
 
-/* brush timer */
-.game{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;background:var(--lime2);border:1px solid #d6e5c2;border-radius:44px;padding:36px}
-.dial{position:relative;width:240px;height:240px}
-.dial svg{width:100%;height:100%;transform:rotate(-90deg)}
-.dial .t{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font:700 44px Manrope;color:var(--deep)}
-.dial .t small{display:block;font:800 14px Nunito;color:#40604d}
-.game .zones{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 22px}
-.zone{padding:9px 16px;border-radius:99px;background:#fff;font-weight:800;font-size:15px;transition:.25s}
-.zone.on{background:var(--green);color:#fff;transform:scale(1.08)}
-.zone.past{background:#cfe6b0}
-
+/* visit */
+.visit{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:stretch}
+.vsteps{display:grid;gap:10px}
+.vsteps button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:18px;background:#fff;border:1px solid #d6e5c2;font-weight:800;transition:.15s}
+.vsteps button i{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--lime);color:var(--deep);font:800 15px Manrope;font-style:normal;flex:none}
+.vsteps button:hover{border-color:var(--green)}
+.vsteps button[aria-selected=true]{background:var(--green);color:#fff;border-color:var(--green)}
+.vsteps button[aria-selected=true] i{background:#fff;color:var(--green)}
+.vsteps button:focus-visible{outline:4px solid var(--green);outline-offset:2px}
+.vcard{background:var(--lime2);border:1px solid #d6e5c2;border-radius:32px;padding:34px}
+.vcard h3{font-size:30px;color:var(--green);margin-bottom:10px}
+.vcard p{max-width:34em;color:#2f4a3a}
+.vcard ul{list-style:none;padding:0;margin-top:18px;display:grid;gap:8px}
+.vcard li{background:#fff;border-radius:14px;padding:12px 16px;font-weight:500}
+@media(max-width:860px){.visit{grid-template-columns:1fr}}
 /* quiz */
 .quiz{background:var(--lime2);border:1px solid #d6e5c2;color:var(--ink);border-radius:44px;padding:44px}
 .quiz h2{color:var(--green)}
@@ -78,7 +82,7 @@ form input{width:100%;margin-top:6px;padding:14px 16px;border-radius:16px;border
 form input:focus{outline:0;border-color:var(--green)}
 .thanks{display:none;background:var(--lime2);border-radius:32px;padding:32px;font:700 26px Manrope;color:var(--deep)}
 footer{padding:30px 0 50px;text-align:center;color:#40604d;font-size:15px}
-@media(max-width:860px){.hero .grid,.game,.cards,form{grid-template-columns:1fr}.dial{margin:0 auto}.quiz,.game{padding:26px;border-radius:32px}.card{transform:none!important}}
+@media(max-width:860px){.hero .grid,.cards,form{grid-template-columns:1fr}.quiz{padding:26px;border-radius:32px}.card{transform:none!important}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -108,18 +112,12 @@ footer{padding:30px 0 50px;text-align:center;color:#40604d;font-size:15px}
 </div>
 
 <main>
-<section class="wrap" id="brush">
- <h2>Чистим зубы вместе: 2 минуты</h2>
- <p class="sub">Игра для детей и их родителей. Таймер подскажет, какую часть зубов чистить сейчас.</p>
- <div class="game">
-  <div class="dial">
-   <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="#fff" stroke="#d6e8a0" stroke-width="10"/><circle id="ring" cx="60" cy="60" r="52" fill="none" stroke="#0e5a36" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
-   <div class="t"><div><span id="clock">2:00</span><small id="zoneName">нажми «старт»</small></div></div>
-  </div>
-  <div>
-   <div class="zones" id="zones"></div>
-   <button class="btn" id="go">Старт</button>
-  </div>
+<section class="wrap" id="visit">
+ <h2>Как проходит первый визит</h2>
+ <p class="sub">Нажимайте на шаги, чтобы узнать, чего ждать. Вам не придётся ничего решать наспех.</p>
+ <div class="visit">
+  <div class="vsteps" id="vsteps" role="tablist" aria-label="Шаги первого визита"></div>
+  <div class="vcard" id="vcard" role="tabpanel" aria-live="polite"></div>
  </div>
 </section>
 
@@ -160,17 +158,15 @@ const phrases=["Ура, блестим!","Спасибо!","Щекотно!","Ч
 function clean(){blob.classList.add('clean');say.textContent=phrases[k++%phrases.length];setTimeout(()=>blob.classList.remove('clean'),1600)}
 mouth.onclick=clean;mouth.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();clean()}};
 
-// brush timer
-const Z=["Верхние снаружи","Верхние внутри","Нижние снаружи","Нижние внутри"],TOT=120;
-zones.innerHTML=Z.map(z=>`<span class="zone">${z}</span>`).join('');
-let t=0,iv=null;
-function draw(){const left=TOT-t;clock.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');
- ring.style.strokeDashoffset=326.7*(1-t/TOT);const zi=Math.min(3,Math.floor(t/30));
- document.querySelectorAll('.zone').forEach((z,i)=>{z.classList.toggle('on',iv&&i==zi);z.classList.toggle('past',i<zi||t>=TOT)});
- zoneName.textContent=t>=TOT?'готово!':iv?Z[zi]:'нажми «старт»'}
-go.onclick=()=>{if(iv){clearInterval(iv);iv=null;go.textContent='Продолжить';draw();return}
- if(t>=TOT)t=0;go.textContent='Пауза';iv=setInterval(()=>{t++;if(t>=TOT){clearInterval(iv);iv=null;go.textContent='Ещё раз';clean()}draw()},1000);draw()};
-draw();
+// first visit
+const VS=[["Знакомство","Администратор записывает вас на удобное время и отвечает на вопросы. Можно прийти с ребёнком или с родственником.",["Приходите без подготовки","Паспорт и прошлые снимки, если они есть, возьмите с собой"]],
+["Осмотр","Врач осматривает зубы и спрашивает, что вас беспокоит. Если нужно, назначает снимок.",["Спокойный разговор без спешки","Вопросы можно задавать в любой момент"]],
+["План лечения","Врач объясняет, что нужно сделать, в каком порядке и из чего состоит каждый этап. Решение принимаете вы.",["Этапы и порядок работ","Варианты лечения, если их несколько"]],
+["Лечение","Если вы готовы, начинаем. Инструменты вскрывают при вас из стерильного пакета.",["Обезболивание, если оно нужно","Можно остановить приём поднятой рукой"]]];
+const vs=document.getElementById('vsteps'),vc=document.getElementById('vcard');
+vs.innerHTML=VS.map(([t],i)=>`<button role="tab" data-i="${i}"><i>${i+1}</i>${t}</button>`).join('');
+function visit(i){vs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-selected',i==j));const [t,d,l]=VS[i];vc.innerHTML=`<h3>${t}</h3><p>${d}</p><ul>${l.map(x=>`<li>${x}</li>`).join('')}</ul>`}
+vs.onclick=e=>{const b=e.target.closest('button');b&&visit(+b.dataset.i)};visit(0);
 
 // quiz
 const Q=[["Для кого запись?",["Для себя","Для ребёнка","Для пожилого родственника"]],["Что беспокоит?",["Болит зуб","Нет зуба","Хочу красивее улыбку","Просто проверить"]],["Как удобнее начать?",["Просто осмотр","Сразу лечить","Сначала узнать план и цену"]]];
