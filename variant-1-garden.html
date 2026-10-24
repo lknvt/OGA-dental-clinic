@@ -179,45 +179,8 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
 </div></header>
 
 <main id="top">
-<div class="wrap"><div class="hsw" role="tablist" aria-label="Вариант первого экрана">
-  <span>Первый экран:</span>
-  <button role="tab" data-h="a">A · Улыбка</button><button role="tab" data-h="b">B · Эмблема</button><button role="tab" data-h="c">C · Запись</button>
-</div></div>
-
-<!-- A: улыбка -->
-<div class="wrap hero hv" data-h="a">
-  <div>
-    <h1>Здоровая улыбка растёт как сад</h1>
-    <p class="lead">Лечим, протезируем и ставим импланты без спешки. Каждый инструмент проходит стерилизацию по шагам, а детям у нас спокойно.</p>
-    <div class="cta"><a class="btn" href="#book">Записаться на приём</a><a class="btn ghost" href="#safety">Как мы стерилизуем</a></div>
-    <ul class="ticks"><li>Осмотр и план лечения до начала работы</li><li>Пакет с инструментами вскрываем при вас</li></ul>
-  </div>
-  <div class="stage">
-    <svg class="leafbg sway" viewBox="0 0 100 100" aria-hidden="true"><path d="M10 90C10 40 40 10 90 10c0 50-30 80-80 80z" fill="#8db53a"/></svg>
-    <svg id="smile" viewBox="0 0 400 210" role="img" aria-label="Иллюстрация улыбки с выбором оттенка эмали">
-      <defs>
-        <linearGradient id="ena" x1="0" x2="1"><stop offset="0" style="stop-color:var(--edge)"/><stop offset=".28" style="stop-color:var(--hi)"/><stop offset=".72" style="stop-color:var(--hi)"/><stop offset="1" style="stop-color:var(--edge)"/></linearGradient>
-        <linearGradient id="enaLow" x1="0" x2="1"><stop offset="0" style="stop-color:var(--lowedge)"/><stop offset=".3" style="stop-color:var(--low)"/><stop offset=".7" style="stop-color:var(--low)"/><stop offset="1" style="stop-color:var(--lowedge)"/></linearGradient>
-        <linearGradient id="shadeTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a1f2b" stop-opacity=".55"/><stop offset=".45" stop-color="#5a1f2b" stop-opacity="0"/></linearGradient>
-        <linearGradient id="lip" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e49aa1"/><stop offset="1" stop-color="#c9707b"/></linearGradient>
-        <clipPath id="mouth"><path d="M30 80Q200 30 370 80Q200 240 30 80Z"/></clipPath>
-      </defs>
-      <path d="M30 80Q200 30 370 80Q200 240 30 80Z" fill="#5a1f2b"/>
-      <g clip-path="url(#mouth)"><g id="lowT"></g><g id="upT"></g><rect x="0" y="0" width="400" height="210" fill="url(#shadeTop)"/></g>
-      <path d="M8 84Q200 -20 392 84Q380 82 370 80Q200 30 30 80Q20 82 8 84Z" fill="url(#lip)"/>
-      <path d="M8 84Q200 276 392 84Q380 86 370 80Q200 240 30 80Q20 82 8 84Z" fill="url(#lip)"/>
-      <path d="M120 176Q200 205 280 176" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="4" stroke-linecap="round"/>
-    </svg>
-    <div class="shade">
-      <label for="sh">Оттенок эмали <output id="shout">A2</output></label>
-      <input id="sh" type="range" min="0" max="4" step="1" value="2" aria-describedby="shnote">
-      <small id="shnote">Показываем, как мы согласуем цвет до начала работы. Это иллюстрация, а не обещание результата.</small>
-    </div>
-  </div>
-</div>
-
 <!-- B: эмблема -->
-<div class="wrap heroB hv" data-h="b" hidden>
+<div class="wrap heroB">
   <div>
     <h1>Забота о вашей улыбке с первого визита</h1>
     <p class="lead">Нажмите на значок рядом и узнайте, чем мы можем помочь. Врач всё объясняет до того, как начинает лечение.</p>
@@ -231,24 +194,6 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
     <div class="orbs" id="orbs"></div>
     <div class="orbtxt" id="orbtxt" aria-live="polite"></div>
   </div>
-</div>
-
-<!-- C: запись -->
-<div class="wrap heroC hv" data-h="c" hidden>
-  <div>
-    <h1>Запишитесь на осмотр: расскажем, что нужно сделать и в каком порядке</h1>
-    <ul class="ticks big"><li>Осмотр и план лечения до начала работы</li><li>Лечим взрослых и детей</li><li>Инструменты стерилизуем по шагам и вскрываем при вас</li></ul>
-  </div>
-  <form class="quick" id="quick" novalidate>
-    <div class="qf">
-      <h2>Запись за минуту</h2>
-      <div class="chips" id="qchips" role="group" aria-label="Что беспокоит"></div>
-      <label class="lbl" for="qp">Телефон</label><input class="f" id="qp" type="tel" placeholder="+7" autocomplete="tel">
-      <button class="btn" style="width:100%">Перезвоните мне</button>
-      <small>Администратор позвонит и подберёт время.</small>
-    </div>
-    <div class="ok" role="status"><h3>Спасибо!</h3><p>Это демо: заявка никуда не отправляется.</p></div>
-  </form>
 </div>
 
 <section id="services" class="services"><div class="wrap">
@@ -293,35 +238,11 @@ footer{padding:40px 0;color:var(--muted);font-size:14px;text-align:center}
 <footer>© OGA Dental Clinic · Дизайн-концепция 1 из 3 · тексты и контакты — для согласования</footer>
 
 <script>
-// smile
-const shades=[["#ffffff","#f1ecdd","#f6f3e8","#e6dec8","A1"],["#fdfbf4","#efe8d4","#f3efe0","#e3dac2","A1.5"],["#fbf9f1","#ece4cf","#efe9d8","#ddd3b9","A2"],["#f4edd6","#e4d8b6","#e8dfc4","#d3c59f","A3"],["#ecdfbd","#dccb9d","#e0d3ae","#c9b88a","A3.5"]];
-function teethRow(list,gap){let out=[];let edge=0;list.forEach(([w,pt],i)=>{out.push([edge+w/2,w,pt]);edge+=w});
- return out.flatMap(([c,w,pt])=>[[200+c,w,pt,c],[200-c,w,pt,c]])}
-const UP=[[38,0],[30,0],[30,5],[26,0],[22,0]],LO=[[26,0],[22,0],[22,2],[20,0],[18,0]];
-document.getElementById('upT').innerHTML=teethRow(UP).map(([cx,w,pt,d])=>{const yb=114-Math.pow(d/160,2)*36,yt=yb-70,x0=cx-w/2+.6,x1=cx+w/2-.6,e=yb+pt;
- return `<g class="tooth"><path d="M${x0} ${yt}H${x1}V${yb-w*.35}C${x1} ${yb-w*.1} ${cx+w*.28} ${e} ${cx} ${e}C${cx-w*.28} ${e} ${x0} ${yb-w*.1} ${x0} ${yb-w*.35}Z" fill="url(#ena)"/><ellipse cx="${cx-w*.14}" cy="${yb-w*.7}" rx="${w*.09}" ry="${w*.32}" fill="#fff" opacity=".45"/></g>`}).join('');
-document.getElementById('lowT').innerHTML=teethRow(LO).map(([cx,w,pt,d])=>{const yt=124-Math.pow(d/160,2)*30,yb=yt+70,x0=cx-w/2+.6,x1=cx+w/2-.6,r=w*.4,t=yt-pt;
- return `<g class="tooth"><path d="M${x0} ${yb}V${yt+r}C${x0} ${yt+r*.3} ${cx-w*.28} ${t} ${cx} ${t}C${cx+w*.28} ${t} ${x1} ${yt+r*.3} ${x1} ${yt+r}V${yb}Z" fill="url(#enaLow)"/></g>`}).join('');
-const sh=document.getElementById('sh');
-function setShade(){const [hi,ed,lo,le,n]=shades[sh.value],st=document.getElementById('smile').style;st.setProperty('--hi',hi);st.setProperty('--edge',ed);st.setProperty('--low',lo);st.setProperty('--lowedge',le);shout.textContent=n}
-sh.oninput=setShade;setShade();
-
-// hero switcher
-const hs=document.querySelector('.hsw');
-function hero(k){document.querySelectorAll('.hv').forEach(h=>h.hidden=h.dataset.h!=k);hs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.h==k));try{history.replaceState(null,'','#hero-'+k)}catch(e){}}
-hs.onclick=e=>{const b=e.target.closest('button');b&&hero(b.dataset.h)};
-addEventListener('hashchange',()=>{const m=location.hash.match(/hero-([abc])/);m&&hero(m[1])});
-hero((location.hash.match(/hero-([abc])/)||[0,'a'])[1]);
-
 // B orbs
 const OR=[["Лечение","left:-2%;top:6%","Кариес, пульпит, реставрации. Лечим аккуратно, с комфортным обезболиванием."],["Имплантация","right:-2%;top:16%","Возвращаем зуб целиком: консультация, снимок, план, коронка."],["Детям","left:-4%;top:52%","Первый визит как знакомство с кабинетом. Родитель рядом."],["Стерилизация","right:-4%;top:58%","Инструменты проходят пять шагов, пакет вскрываем при вас."]];
 orbs.innerHTML=OR.map(([t,pos],i)=>`<button class="orb" style="${pos}" aria-pressed="false" data-i="${i}">${t}</button>`).join('');
 function orb(i){orbs.querySelectorAll('.orb').forEach((b,j)=>b.setAttribute('aria-pressed',i==j));orbtxt.innerHTML=`<b>${OR[i][0]}.</b> ${OR[i][2]}`}
 orbs.onclick=e=>{const b=e.target.closest('.orb');b&&orb(+b.dataset.i)};orb(0);
-
-// C quick form
-qchips.innerHTML=["Осмотр","Болит зуб","Имплантация","Ребёнку","Коронки"].map((t,i)=>`<input type="radio" name="qt" id="q${i}" ${i?'':'checked'} style="position:absolute;opacity:0"><label for="q${i}" style="padding:9px 16px;border-radius:99px;cursor:pointer;font-weight:500;font-size:15px" class="qc">${t}</label>`).join('');
-quick.onsubmit=e=>{e.preventDefault();if(!qp.value.trim()){qp.focus();return}quick.classList.add('sent')};
 
 // services
 const S=[["Лечение зубов","Кариес, пульпит, реставрации. Лечим аккуратно, с комфортным обезболиванием."],
